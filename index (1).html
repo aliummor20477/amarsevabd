@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আমার সেবা অনলাইন বিডি</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;700&display=swap');
+        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f3f4f6; }
+        .sidebar { transition: 0.3s; width: 0; overflow: hidden; position: fixed; z-index: 50; top: 0; left: 0; height: 100%; background: white; }
+        .sidebar.active { width: 280px; }
+        .page-section { display: none; }
+        .active-section { display: flex !important; }
+    </style>
+</head>
+<body>
+
+    <div id="loginPage" class="page-section active-section min-h-screen bg-indigo-900 flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <h2 class="text-2xl font-bold text-center text-indigo-800 mb-6">লগইন করুন</h2>
+            <input type="email" id="lEmail" placeholder="আপনার ইমেইল" class="w-full p-3 border rounded-lg mb-4 outline-none focus:ring-2 ring-indigo-400">
+            <input type="password" id="lPass" placeholder="পাসওয়ার্ড" class="w-full p-3 border rounded-lg mb-6 outline-none focus:ring-2 ring-indigo-400">
+            <button onclick="handleLogin()" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold hover:bg-indigo-700 transition">লগইন</button>
+            <p class="text-center mt-6 text-sm">একাউন্ট নেই? <button onclick="goToReg()" class="text-indigo-600 font-bold underline">রেজিস্ট্রেশন করুন</button></p>
+        </div>
+    </div>
+
+    <div id="regPage" class="page-section min-h-screen bg-purple-900 flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
+            <h2 class="text-2xl font-bold text-center text-purple-800 mb-6">নতুন একাউন্ট</h2>
+            <input type="text" id="rName" placeholder="আপনার নাম" class="w-full p-3 border rounded-lg mb-4 outline-none">
+            <input type="email" id="rEmail" placeholder="ইমেইল" class="w-full p-3 border rounded-lg mb-4 outline-none">
+            <input type="password" id="rPass" placeholder="পাসওয়ার্ড" class="w-full p-3 border rounded-lg mb-6 outline-none">
+            <button onclick="handleReg()" class="w-full bg-purple-600 text-white py-3 rounded-lg font-bold hover:bg-purple-700 transition">রেজিস্ট্রেশন করুন</button>
+            <p class="text-center mt-6 text-sm">ইতিমধ্যে একাউন্ট আছে? <button onclick="goToLogin()" class="text-purple-600 font-bold underline">লগইন করুন</button></p>
+        </div>
+    </div>
+
+    <div id="mainDashboard" class="page-section min-h-screen flex-col">
+        <nav class="bg-indigo-700 text-white p-4 flex justify-between items-center shadow-lg w-full">
+            <button onclick="toggleSidebar()"><i class="fas fa-bars text-2xl"></i></button>
+            <span class="font-bold">আমার সেবা অনলাইন বিডি</span>
+            <button onclick="logout()"><i class="fas fa-sign-out-alt text-xl"></i></button>
+        </nav>
+
+        <div class="p-4 max-w-lg mx-auto w-full">
+            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white text-center shadow-lg mb-6">
+                <p class="text-sm opacity-80">স্বাগতম, <span id="userName">ইউজার</span></p>
+                <p class="text-[10px] mt-1">আপনার ব্যালেন্স</p>
+                <h2 class="text-4xl font-bold">৳ <span id="balanceDisplay">0.00</span></h2>
+                <button onclick="showService('addmoney')" class="mt-4 bg-white text-indigo-700 px-6 py-2 rounded-full font-bold shadow-md hover:bg-gray-100">+ Add Money</button>
+            </div>
+            <div id="serviceContent" class="space-y-4">
+                <div class="text-center p-10 text-gray-400 italic">মেনু থেকে সার্ভিস বেছে নিন</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="sidebar" class="sidebar shadow-2xl">
+        <div class="bg-indigo-800 p-5 text-white font-bold text-center">সার্ভিস মেনু</div>
+        <div class="p-2 flex flex-col overflow-y-auto h-full">
+            <button onclick="showService('nid')" class="text-left p-4 border-b hover:bg-gray-100 font-semibold">★ এনআইডি ডাউনলোড (৭০৳)</button>
+            <button onclick="showService('server')" class="text-left p-4 border-b hover:bg-gray-100 font-semibold">★ সার্ভার কপি (২০৳)</button>
+            <button onclick="showService('birth')" class="text-left p-4 border-b hover:bg-gray-100 font-semibold">★ নতুন জন্মনিবন্ধন</button>
+            <button onclick="showService('birth_phone')" class="text-left p-4 border-b hover:bg-gray-100 font-semibold">★ ফোন নম্বর পরিবর্তন (৩০০৳)</button>
+            <button onclick="showService('num_to_nid')" class="text-left p-4 border-b hover:bg-gray-100 font-semibold">★ নাম্বার টু এনআইডি (৫০০৳)</button>
+            <button onclick="toggleSidebar()" class="mt-6 bg-red-500 text-white p-3 rounded font-bold">মেনু বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <script>
+        // --- লগইন এবং রেজিস্ট্রেশন লজিক ---
+        
+        function handleReg() {
+            const name = document.getElementById('rName').value;
+            const email = document.getElementById('rEmail').value;
+            const pass = document.getElementById('rPass').value;
+
+            if(name === "" || email === "" || pass === "") {
+                alert("সবগুলো বক্স পূরণ করুন বস!");
+                return;
+            }
+
+            // তথ্যগুলো ব্রাউজারে সেভ করা
+            localStorage.setItem('uName', name);
+            localStorage.setItem('uEmail', email);
+            localStorage.setItem('uPass', pass);
+            localStorage.setItem('uBalance', "0.00");
+
+            alert("রেজিস্ট্রেশন সফল! এখন লগইন করুন।");
+            goToLogin();
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('lEmail').value;
+            const pass = document.getElementById('lPass').value;
+
+            // ব্রাউজার থেকে সেভ করা তথ্য আনা
+            const savedEmail = localStorage.getItem('uEmail');
+            const savedPass = localStorage.getItem('uPass');
+            const savedName = localStorage.getItem('uName');
+
+            if (email === savedEmail && pass === savedPass) {
+                document.getElementById('userName').innerText = savedName;
+                updateBalanceDisplay();
+                showSection('mainDashboard');
+            } else {
+                alert("ইমেইল বা পাসওয়ার্ড ভুল! অথবা আপনি রেজিস্ট্রেশন করেননি।");
+            }
+        }
+
+        // --- কমন ফাংশনস ---
+        
+        function updateBalanceDisplay() {
+            const bal = localStorage.getItem('uBalance') || "0.00";
+            document.getElementById('balanceDisplay').innerText = bal;
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active-section'));
+            document.getElementById(id).classList.add('active-section');
+        }
+
+        function goToReg() { showSection('regPage'); }
+        function goToLogin() { showSection('loginPage'); }
+        function logout() { showSection('loginPage'); }
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+
+        // সার্ভিস এবং ফর্ম লজিক (আগের মতই)
+        function showService(type) {
+            if(document.getElementById('sidebar').classList.contains('active')) toggleSidebar();
+            let html = "";
+            if(type === 'addmoney') {
+                html = `<div class="bg-white p-6 rounded-xl shadow border-t-4 border-green-500">
+                    <h3 class="font-bold text-indigo-700">টাকা অ্যাড করুন</h3>
+                    <p class="text-sm mt-2">বিকাশ পার্সোনাল: <b>01828407381</b></p>
+                    <input type="number" id="depAmt" placeholder="টাকার পরিমাণ" class="w-full p-3 border mt-3 rounded">
+                    <input type="text" id="trx" placeholder="ট্রানজেকশন আইডি" class="w-full p-3 border mt-2 rounded">
+                    <button onclick="alert('রিকোয়েস্ট বসের কাছে গিয়েছে!')" class="w-full bg-green-500 text-white py-3 mt-4 rounded font-bold">সাবমিট</button>
+                </div>`;
+            } else if(type === 'nid') {
+                html = createFormUI("এনআইডি ডাউনলোড", 70, "এনআইডি/ফরম নম্বর", "জন্ম তারিখ (yyyy-mm-dd)");
+            } else if(type === 'birth') {
+                html = `<div class="bg-white p-6 rounded-xl shadow border">
+                    <h3 class="font-bold mb-4">নতুন জন্মনিবন্ধন</h3>
+                    <select id="prc" class="w-full p-3 border mb-4 rounded"><option value="1500">চট্টগ্রাম (১৫০০৳)</option><option value="1200">ঢাকা (১২০০৳)</option></select>
+                    <textarea id="inf" placeholder="তথ্য এখানে দিন..." rows="4" class="w-full p-3 border mb-4 rounded"></textarea>
+                    <button onclick="processOrder('জন্মনিবন্ধন', document.getElementById('prc').value)" class="w-full bg-indigo-600 text-white py-3 rounded font-bold">আবেদন</button>
+                </div>`;
+            }
+            document.getElementById('serviceContent').innerHTML = html;
+        }
+
+        function createFormUI(t, p, p1, p2) {
+            return `<div class="bg-white p-6 rounded-xl shadow border-t-4 border-indigo-600">
+                <h3 class="font-bold mb-4">${t} (৳${p})</h3>
+                <input type="text" placeholder="${p1}" class="w-full p-3 border mb-3 rounded">
+                <input type="text" placeholder="${p2}" class="w-full p-3 border mb-4 rounded">
+                <button onclick="processOrder('${t}', ${p})" class="w-full bg-indigo-600 text-white py-3 rounded font-bold">সাবমিট</button>
+            </div>`;
+        }
+
+        function processOrder(name, price) {
+            let bal = parseFloat(localStorage.getItem('uBalance'));
+            if(bal < price) {
+                alert("ব্যালেন্স নেই! দয়া করে অ্যাড মানি করুন।");
+            } else {
+                bal -= price;
+                localStorage.setItem('uBalance', bal.toFixed(2));
+                updateBalanceDisplay();
+                alert(name + " সফল! টাকা কেটে নেওয়া হয়েছে।");
+            }
+        }
+    </script>
+</body>
+</html>
