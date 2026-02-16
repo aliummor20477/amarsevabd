@@ -349,10 +349,39 @@
                 <div class="text-center mb-6">
                     <p class="text-3xl font-bold text-blue-600">${price}৳</p>
                     <p class="text-gray-500">নতুন জন্মনিবন্ধনের জন্য</p>
-                    <p class="text-sm text-orange-500 mt-2">নোট: সঠিক তথ্য দিন</p>
+                </div>
+                
+                <!-- চলমান নোটিশ ব্যানার -->
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-3 mb-4 rounded overflow-hidden">
+                    <marquee behavior="scroll" direction="left" scrollamount="5" class="font-medium">
+                        ⚡ নতুন জন্মনিবন্ধন করতে নিচের মেনুতে জেলা সিলেক্ট করুন। বিঃদ্রঃ রেজিষ্ট্রেশন সেই জেলার সিটি করপোরেশন থেকে হবে। ⚡
+                    </marquee>
                 </div>
                 
                 <div class="space-y-4">
+                    <!-- জেলা নির্বাচন -->
+                    <div>
+                        <label class="block text-gray-700 mb-2">কোন জেলার রেজিস্ট্রেশন?</label>
+                        <select id="district" class="w-full p-3 border rounded-lg bg-white">
+                            <option value="">জেলা নির্বাচন করুন</option>
+                            <option value="ঢাকা">ঢাকা</option>
+                            <option value="চট্টগ্রাম">চট্টগ্রাম</option>
+                            <option value="রাজশাহী">রাজশাহী</option>
+                            <option value="খুলনা">খুলনা</option>
+                            <option value="বরিশাল">বরিশাল</option>
+                            <option value="সিলেট">সিলেট</option>
+                            <option value="রংপুর">রংপুর</option>
+                            <option value="ময়মনসিংহ">ময়মনসিংহ</option>
+                            <option value="কুমিল্লা">কুমিল্লা</option>
+                            <option value="নোয়াখালী">নোয়াখালী</option>
+                            <option value="বগুড়া">বগুড়া</option>
+                            <option value="যশোর">যশোর</option>
+                            <option value="কক্সবাজার">কক্সবাজার</option>
+                            <option value="গাজীপুর">গাজীপুর</option>
+                            <option value="নারায়ণগঞ্জ">নারায়ণগঞ্জ</option>
+                        </select>
+                    </div>
+                    
                     <div>
                         <label class="block text-gray-700 mb-2">নাম</label>
                         <input type="text" id="name" placeholder="আপনার নাম" class="w-full p-3 border rounded-lg">
@@ -375,7 +404,12 @@
                     
                     <div>
                         <label class="block text-gray-700 mb-2">জন্মস্থান</label>
-                        <input type="text" id="birthPlace" placeholder="জন্মস্থান" class="w-full p-3 border rounded-lg">
+                        <input type="text" id="birthPlace" placeholder="জন্মস্থান (গ্রাম/এলাকা)" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">বিস্তারিত ঠিকানা</label>
+                        <textarea id="address" rows="3" placeholder="বর্তমান ঠিকানা (গ্রাম/রোড, পোস্ট অফিস, থানা, জেলা)" class="w-full p-3 border rounded-lg"></textarea>
                     </div>
                     
                     <button onclick="placeOrder(3, 'নতুন জন্মনিবন্ধন', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
@@ -571,11 +605,13 @@
         }
         else if (serviceId == 3) {
             orderData.details = {
+                district: document.getElementById('district')?.value || '',
                 name: document.getElementById('name')?.value || '',
                 fatherName: document.getElementById('fatherName')?.value || '',
                 motherName: document.getElementById('motherName')?.value || '',
                 dob: document.getElementById('dob')?.value || '',
-                birthPlace: document.getElementById('birthPlace')?.value || ''
+                birthPlace: document.getElementById('birthPlace')?.value || '',
+                address: document.getElementById('address')?.value || ''
             };
         }
         else if (serviceId == 4) {
