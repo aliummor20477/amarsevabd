@@ -35,6 +35,17 @@
     // গ্লোবাল ভেরিয়েবল
     let currentUser = null;
     let userBalance = 0;
+    let services = [
+        { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card', price: 100 },
+        { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy', price: 100 },
+        { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby', price: 100 },
+        { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit', price: 100 },
+        { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen', price: 100 },
+        { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit', price: 100 },
+        { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice', price: 100 },
+        { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line', price: 100 },
+        { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt', price: 100 }
+    ];
 </script>
 
 <!-- App Container -->
@@ -43,7 +54,7 @@
 <script>
     const app = document.getElementById('app');
 
-    // ---------- লগইন পেজ (আলাদা) ----------
+    // ---------- লগইন পেজ (শুধু লগইন ফর্ম) ----------
     function renderLoginPage() {
         app.innerHTML = `
             <div class="min-h-screen bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center p-4">
@@ -57,14 +68,13 @@
                         <p class="text-gray-500">আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
                     </div>
 
-                    <!-- ফর্ম কার্ড -->
+                    <!-- লগইন ফর্ম -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-inner">
                         <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
                             <i class="fas fa-lock text-blue-600 mr-2"></i>
                             লগইন করুন
                         </h2>
                         
-                        <!-- ইনপুট ফিল্ডস -->
                         <div class="space-y-4">
                             <div class="relative">
                                 <i class="fas fa-phone-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -77,13 +87,9 @@
                                 <input type="password" id="login-password" placeholder="পাসওয়ার্ড" 
                                     class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400">
                             </div>
-                        </div>
-
-                        <!-- বাটন -->
-                        <div class="mt-6">
+                            
                             <button onclick="handleLogin()" 
                                 class="w-full bg-gradient-to-r from-blue-600 to-sky-500 text-white py-3 rounded-lg font-semibold shadow-md hover:shadow-lg">
-                                <i class="fas fa-sign-in-alt mr-2"></i>
                                 লগইন করুন
                             </button>
                             
@@ -94,12 +100,6 @@
                                 </button>
                             </p>
                         </div>
-
-                        <!-- হেল্প টেক্সট -->
-                        <p class="text-xs text-center text-gray-400 mt-6">
-                            <i class="fas fa-shield-alt mr-1"></i>
-                            আপনার তথ্য ১০০% নিরাপদ
-                        </p>
                     </div>
 
                     <!-- ফুটার -->
@@ -128,14 +128,13 @@
                         <p class="text-gray-500">রেজিস্ট্রেশন করুন</p>
                     </div>
 
-                    <!-- ফর্ম কার্ড -->
+                    <!-- রেজিস্টার ফর্ম -->
                     <div class="bg-gray-50 rounded-xl p-6 shadow-inner">
                         <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
                             <i class="fas fa-user text-green-600 mr-2"></i>
                             রেজিস্ট্রেশন ফর্ম
                         </h2>
                         
-                        <!-- ইনপুট ফিল্ডস -->
                         <div class="space-y-4">
                             <div class="relative">
                                 <i class="fas fa-phone-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
@@ -154,13 +153,9 @@
                                 <input type="password" id="reg-confirm-password" placeholder="পাসওয়ার্ড নিশ্চিত করুন" 
                                     class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400">
                             </div>
-                        </div>
-
-                        <!-- বাটন -->
-                        <div class="mt-6">
+                            
                             <button onclick="handleRegister()" 
                                 class="w-full bg-gradient-to-r from-green-600 to-green-500 text-white py-3 rounded-lg font-semibold shadow-md hover:shadow-lg">
-                                <i class="fas fa-user-plus mr-2"></i>
                                 রেজিস্টার করুন
                             </button>
                             
@@ -171,12 +166,6 @@
                                 </button>
                             </p>
                         </div>
-
-                        <!-- হেল্প টেক্সট -->
-                        <p class="text-xs text-center text-gray-400 mt-6">
-                            <i class="fas fa-shield-alt mr-1"></i>
-                            আপনার তথ্য ১০০% নিরাপদ
-                        </p>
                     </div>
 
                     <!-- ফুটার -->
@@ -191,7 +180,7 @@
         `;
     }
 
-    // ---------- হোমপেজ ----------
+    // ---------- হোমপেজ (শুধু এডমানি, টাকা, অর্ডার, wp) ----------
     function renderHomePage() {
         app.innerHTML = `
             <div>
@@ -199,34 +188,40 @@
                 <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 flex justify-between items-center shadow-lg">
                     <i class="fas fa-bars text-2xl cursor-pointer hover:opacity-80" onclick="toggleMenu()"></i>
                     <h1 class="text-xl font-bold tracking-wide">আলমার সেবা</h1>
-                    <i class="fas fa-user-circle text-2xl cursor-pointer hover:opacity-80" onclick="showUserProfile()"></i>
+                    <div class="relative">
+                        <i class="fas fa-user-circle text-2xl cursor-pointer hover:opacity-80" onclick="toggleUserMenu()"></i>
+                        <!-- ইউজার ড্রপডাউন মেনু -->
+                        <div id="userMenu" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl hidden z-50">
+                            <div class="p-3 border-b">
+                                <p class="text-sm text-gray-600">${currentUser?.email?.split('@')[0]}</p>
+                                <p class="text-xs text-gray-500">ব্যালেন্স: ৳${userBalance}</p>
+                            </div>
+                            <button onclick="handleLogout()" class="w-full text-left p-3 text-red-600 hover:bg-gray-100 rounded-b-lg">
+                                <i class="fas fa-sign-out-alt mr-2"></i> লগআউট
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- সাইড মেনু (ডিফল্টভাবে লুকানো) -->
-                <div id="sideMenu" class="fixed left-0 top-0 h-full w-64 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300">
-                    <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4">
-                        <h2 class="font-bold">মেনু</h2>
-                        <button onclick="toggleMenu()" class="absolute top-4 right-4 text-white">
-                            <i class="fas fa-times"></i>
+                <!-- সাইড মেনু (এখানে সার্ভিস লিস্ট থাকবে) -->
+                <div id="sideMenu" class="fixed left-0 top-0 h-full w-72 bg-white shadow-xl z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto">
+                    <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 sticky top-0 flex justify-between items-center">
+                        <h2 class="font-bold text-lg">সার্ভিস সমূহ</h2>
+                        <button onclick="toggleMenu()" class="text-white">
+                            <i class="fas fa-times text-xl"></i>
                         </button>
                     </div>
-                    <div class="p-4">
-                        <div class="py-2 hover:bg-gray-100 px-2 rounded cursor-pointer" onclick="goToServices()">
-                            <i class="fas fa-list text-blue-600 mr-2"></i> সার্ভিস সমূহ
-                        </div>
-                        <div class="py-2 hover:bg-gray-100 px-2 rounded cursor-pointer" onclick="goToOrders()">
-                            <i class="fas fa-shopping-bag text-blue-600 mr-2"></i> আমার অর্ডার
-                        </div>
-                        <div class="py-2 hover:bg-gray-100 px-2 rounded cursor-pointer" onclick="goToProfile()">
-                            <i class="fas fa-user text-blue-600 mr-2"></i> প্রোফাইল
-                        </div>
-                        <div class="py-2 hover:bg-gray-100 px-2 rounded cursor-pointer" onclick="handleLogout()">
-                            <i class="fas fa-sign-out-alt text-red-600 mr-2"></i> লগআউট
-                        </div>
+                    <div class="p-4" id="menuServicesList"></div>
+                    
+                    <!-- সাইড মেনুতে লগআউট বাটন -->
+                    <div class="p-4 border-t">
+                        <button onclick="handleLogout()" class="w-full bg-red-500 text-white p-3 rounded-lg hover:bg-red-600">
+                            <i class="fas fa-sign-out-alt mr-2"></i> লগআউট
+                        </button>
                     </div>
                 </div>
 
-                <!-- মেনু ওপেন করার ওভারলে -->
+                <!-- মেনু ওভারলে -->
                 <div id="menuOverlay" class="fixed inset-0 bg-black bg-opacity-50 hidden z-40" onclick="toggleMenu()"></div>
 
                 <!-- ব্যালেন্স ও অ্যাড মানি -->
@@ -246,9 +241,7 @@
                         <i class="fas fa-shopping-bag text-blue-600 mr-2"></i>
                         অর্ডার সমূহ
                     </h2>
-                    <div id="ordersList" class="text-sm text-gray-500">
-                        <p class="text-center py-3 bg-white rounded-lg shadow-sm">কোন অর্ডার নেই</p>
-                    </div>
+                    <div id="ordersList" class="text-sm text-gray-500"></div>
                 </div>
 
                 <!-- WhatsApp বাটন -->
@@ -258,27 +251,431 @@
                         <span class="font-semibold">01753119223 - WhatsApp এ যোগাযোগ</span>
                     </a>
                 </div>
-
-                <!-- সার্ভিস লিস্ট -->
-                <div class="p-4">
-                    <h2 class="font-semibold text-gray-700 mb-3 flex items-center">
-                        <i class="fas fa-list text-blue-600 mr-2"></i>
-                        সার্ভিস সমূহ
-                    </h2>
-                    <div class="space-y-2" id="servicesList"></div>
-                </div>
             </div>
         `;
         
-        // ক্লিক হ্যান্ডলার ঠিক করার জন্য setTimeout
         setTimeout(() => {
-            loadServices();
+            loadMenuServices();
             loadUserBalance();
             loadOrders();
         }, 100);
     }
 
-    // ---------- মেনু টগল ফাংশন ----------
+    // ---------- ইউজার মেনু টগল ----------
+    window.toggleUserMenu = function() {
+        const menu = document.getElementById('userMenu');
+        menu.classList.toggle('hidden');
+    };
+
+    // ---------- মেনুতে সার্ভিস লোড ----------
+    function loadMenuServices() {
+        let html = '<div class="space-y-2">';
+        services.forEach(service => {
+            html += `
+                <div onclick="showServiceDetails('${service.id}', '${service.name}')" class="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md cursor-pointer border border-gray-100">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas ${service.icon} text-blue-600"></i>
+                    </div>
+                    <span class="flex-1 font-medium">${service.name}</span>
+                    <span class="text-blue-600 font-bold">${service.price}৳</span>
+                    <i class="fas fa-chevron-right text-gray-400 ml-2"></i>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        const menuServicesList = document.getElementById('menuServicesList');
+        if (menuServicesList) menuServicesList.innerHTML = html;
+    }
+
+    // ---------- সার্ভিস ডিটেইলস পেজ ----------
+    function showServiceDetailsPage(serviceId, serviceName) {
+        let html = '';
+        const service = services.find(s => s.id == serviceId);
+        const price = service ? service.price : 100;
+        
+        html = `
+            <div class="min-h-screen bg-gray-50">
+                <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 flex justify-between items-center shadow-lg">
+                    <button onclick="goBack()" class="text-white">
+                        <i class="fas fa-arrow-left text-xl"></i>
+                    </button>
+                    <h1 class="text-xl font-bold">${serviceName}</h1>
+                    <button onclick="handleLogout()" class="text-white">
+                        <i class="fas fa-sign-out-alt text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="p-4">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+        `;
+        
+        if (serviceId == 1) { // NID নাম্বার টু PDF
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                    <p class="text-gray-500">মাত্র ${price} টাকায় NID to PDF</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">NID নাম্বার</label>
+                        <input type="text" id="nidNumber" placeholder="এনআইডি নাম্বার লিখুন" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্ম তারিখ</label>
+                        <input type="date" id="dob" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <button onclick="placeOrder(1, 'NID নাম্বার টু PDF', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        else if (serviceId == 2) { // সার্ভার কপি
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                    <p class="text-gray-500">সার্ভার কপির জন্য আবেদন</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">NID নাম্বার</label>
+                        <input type="text" id="nidNumber" placeholder="এনআইডি নাম্বার লিখুন" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্ম তারিখ</label>
+                        <input type="date" id="dob" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <button onclick="placeOrder(2, 'সার্ভার কপি', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        else if (serviceId == 3) { // নতুন জন্মনিবন্ধন
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                    <p class="text-gray-500">নতুন জন্মনিবন্ধনের জন্য</p>
+                    <p class="text-sm text-orange-500 mt-2">নোট: সঠিক তথ্য দিন</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">নাম</label>
+                        <input type="text" id="name" placeholder="আপনার নাম" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">পিতার নাম</label>
+                        <input type="text" id="fatherName" placeholder="পিতার নাম" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">মাতার নাম</label>
+                        <input type="text" id="motherName" placeholder="মাতার নাম" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্ম তারিখ</label>
+                        <input type="date" id="dob" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্মস্থান</label>
+                        <input type="text" id="birthPlace" placeholder="জন্মস্থান" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <button onclick="placeOrder(3, 'নতুন জন্মনিবন্ধন', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        else if (serviceId == 4) { // জন্মনিবন্ধন নাম্বার পরিবর্তন
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">বর্তমান জন্মনিবন্ধন নাম্বার</label>
+                        <input type="text" id="currentBn" placeholder="বর্তমান নাম্বার" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্ম তারিখ</label>
+                        <input type="date" id="dob" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">নতুন ফোন নাম্বার</label>
+                        <input type="text" id="newPhone" placeholder="০১৭xxxxxxxx" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <button onclick="placeOrder(4, 'জন্মনিবন্ধন নাম্বার পরিবর্তন', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        else if (serviceId == 5) { // জন্মনিবন্ধন সংশোধন
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্মনিবন্ধন নাম্বার</label>
+                        <input type="text" id="bnNumber" placeholder="জন্মনিবন্ধন নাম্বার" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্ম তারিখ</label>
+                        <input type="date" id="dob" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">কি সংশোধন করতে চান?</label>
+                        <textarea id="note" rows="4" placeholder="বিস্তারিত লিখুন..." class="w-full p-3 border rounded-lg"></textarea>
+                    </div>
+                    
+                    <button onclick="placeOrder(5, 'জন্মনিবন্ধন সংশোধন', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        else if (serviceId == 6) { // NID সংশোধন
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-lg text-gray-700">NID সংশোধন করতে WhatsApp এ মেসেজ করুন</p>
+                </div>
+                
+                <a href="https://wa.me/8801753119223" target="_blank" class="flex items-center justify-center bg-green-500 text-white p-4 rounded-lg">
+                    <i class="fab fa-whatsapp text-2xl mr-2"></i>
+                    01753119223 - WhatsApp
+                </a>
+            `;
+        }
+        else if (serviceId == 7) { // নতুন টিন সার্টিফিকেট
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">আপনার নাম</label>
+                        <input type="text" id="name" placeholder="আপনার নাম" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">NID নাম্বার</label>
+                        <input type="text" id="nidNumber" placeholder="এনআইডি নাম্বার" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">জন্ম তারিখ</label>
+                        <input type="date" id="dob" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">ঠিকানা</label>
+                        <input type="text" id="address" placeholder="ঠিকানা" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">পেশা</label>
+                        <input type="text" id="profession" placeholder="পেশা" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">ফোন নাম্বার</label>
+                        <input type="text" id="phone" placeholder="০১৭xxxxxxxx" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <button onclick="placeOrder(7, 'নতুন টিন সার্টিফিকেট', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        else if (serviceId == 8) { // ই-রিটার্ন
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-lg text-gray-700">ই-রিটার্ন দিতে যোগাযোগ করুন</p>
+                </div>
+                
+                <a href="https://wa.me/8801753119223" target="_blank" class="flex items-center justify-center bg-green-500 text-white p-4 rounded-lg">
+                    <i class="fab fa-whatsapp text-2xl mr-2"></i>
+                    01753119223 - WhatsApp
+                </a>
+            `;
+        }
+        else if (serviceId == 9) { // ফোন নাম্বার টু এনআইডি
+            html += `
+                <div class="text-center mb-6">
+                    <p class="text-3xl font-bold text-blue-600">${price}৳</p>
+                </div>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 mb-2">ফোন নাম্বার</label>
+                        <input type="text" id="phone" placeholder="০১৭xxxxxxxx" class="w-full p-3 border rounded-lg">
+                    </div>
+                    
+                    <button onclick="placeOrder(9, 'ফোন নাম্বার টু এনআইডি', ${price})" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700">
+                        অর্ডার করুন
+                    </button>
+                </div>
+            `;
+        }
+        
+        html += `
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        app.innerHTML = html;
+    }
+
+    // ---------- অর্ডার প্লেস ----------
+    window.placeOrder = async function(serviceId, serviceName, price) {
+        if (!currentUser) {
+            alert('লগইন প্রয়োজন');
+            return;
+        }
+        
+        if (userBalance < price) {
+            alert('পর্যাপ্ত ব্যালেন্স নেই। অ্যাড মানি করুন');
+            return;
+        }
+        
+        // ব্যালেন্স কাটা
+        const newBalance = userBalance - price;
+        await db.collection('users').doc(currentUser.uid).update({
+            balance: newBalance
+        });
+        
+        // অর্ডার ডাটা তৈরি
+        const orderData = {
+            userId: currentUser.uid,
+            userPhone: currentUser.email.split('@')[0],
+            serviceId: serviceId,
+            serviceName: serviceName,
+            price: price,
+            status: 'pending',
+            timestamp: new Date(),
+            details: {}
+        };
+        
+        // ফর্ম ডাটা সংগ্রহ
+        if (serviceId == 1 || serviceId == 2) {
+            orderData.details = {
+                nidNumber: document.getElementById('nidNumber')?.value || '',
+                dob: document.getElementById('dob')?.value || ''
+            };
+        }
+        else if (serviceId == 3) {
+            orderData.details = {
+                name: document.getElementById('name')?.value || '',
+                fatherName: document.getElementById('fatherName')?.value || '',
+                motherName: document.getElementById('motherName')?.value || '',
+                dob: document.getElementById('dob')?.value || '',
+                birthPlace: document.getElementById('birthPlace')?.value || ''
+            };
+        }
+        else if (serviceId == 4) {
+            orderData.details = {
+                currentBn: document.getElementById('currentBn')?.value || '',
+                dob: document.getElementById('dob')?.value || '',
+                newPhone: document.getElementById('newPhone')?.value || ''
+            };
+        }
+        else if (serviceId == 5) {
+            orderData.details = {
+                bnNumber: document.getElementById('bnNumber')?.value || '',
+                dob: document.getElementById('dob')?.value || '',
+                note: document.getElementById('note')?.value || ''
+            };
+        }
+        else if (serviceId == 7) {
+            orderData.details = {
+                name: document.getElementById('name')?.value || '',
+                nidNumber: document.getElementById('nidNumber')?.value || '',
+                dob: document.getElementById('dob')?.value || '',
+                address: document.getElementById('address')?.value || '',
+                profession: document.getElementById('profession')?.value || '',
+                phone: document.getElementById('phone')?.value || ''
+            };
+        }
+        else if (serviceId == 9) {
+            orderData.details = {
+                phone: document.getElementById('phone')?.value || ''
+            };
+        }
+        
+        await db.collection('orders').add(orderData);
+        
+        alert('অর্ডার সফল হয়েছে!');
+        userBalance = newBalance;
+        
+        // হোমপেজে ফিরে যাবে এবং অর্ডার লিস্ট আপডেট হবে
+        renderHomePage();
+    };
+
+    // ---------- অর্ডার লোড ----------
+    async function loadOrders() {
+        if (!currentUser) return;
+        
+        const snapshot = await db.collection('orders')
+            .where('userId', '==', currentUser.uid)
+            .orderBy('timestamp', 'desc')
+            .limit(5)
+            .get();
+        
+        let html = '';
+        if (snapshot.empty) {
+            html = '<p class="text-center py-3 bg-white rounded-lg shadow-sm">কোন অর্ডার নেই</p>';
+        } else {
+            snapshot.forEach(doc => {
+                const order = doc.data();
+                const date = new Date(order.timestamp?.toDate()).toLocaleDateString('bn-BD');
+                html += `
+                    <div class="bg-white p-3 rounded-lg shadow-sm mb-2 border-l-4 border-blue-500">
+                        <div class="flex justify-between">
+                            <span class="font-medium">${order.serviceName}</span>
+                            <span class="text-blue-600 font-bold">৳${order.price}</span>
+                        </div>
+                        <div class="flex justify-between text-sm text-gray-500 mt-1">
+                            <span>${date}</span>
+                            <span class="${order.status === 'pending' ? 'text-yellow-500' : 'text-green-500'}">${order.status === 'pending' ? 'পেন্ডিং' : 'সম্পন্ন'}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        const ordersList = document.getElementById('ordersList');
+        if (ordersList) ordersList.innerHTML = html;
+    }
+
+    // ---------- গো ব্যাক ----------
+    window.goBack = function() {
+        renderHomePage();
+    };
+
+    // ---------- মেনু টগল ----------
     window.toggleMenu = function() {
         const menu = document.getElementById('sideMenu');
         const overlay = document.getElementById('menuOverlay');
@@ -291,7 +688,7 @@
         }
     };
 
-    // ---------- লগইন হ্যান্ডলার (ইমেইল ফরম্যাট ঠিক করা) ----------
+    // ---------- লগইন হ্যান্ডলার ----------
     window.handleLogin = async function() {
         const phone = document.getElementById('login-phone').value;
         const password = document.getElementById('login-password').value;
@@ -301,13 +698,13 @@
             return;
         }
         
-        // ফোন নাম্বার থেকে ইমেইল তৈরি (সঠিক ফরম্যাট)
         const email = phone.trim() + '@almar-seba.com';
         
         try {
             await auth.signInWithEmailAndPassword(email, password);
             
             if (phone === '01828407381') {
+                loadServicesFromFirebase();
                 renderAdminPanel();
             } else {
                 renderHomePage();
@@ -386,7 +783,6 @@
             </div>
         `;
         
-        // পুরোনো মোডাল রিমুভ করে নতুন যোগ
         const oldModal = document.getElementById('modal');
         if (oldModal) oldModal.remove();
         
@@ -423,38 +819,6 @@
         closeModal();
     };
 
-    // ---------- সার্ভিস লোড ----------
-    async function loadServices() {
-        const services = [
-            { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card' },
-            { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy' },
-            { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby' },
-            { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit' },
-            { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen' },
-            { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit' },
-            { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice' },
-            { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line' },
-            { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt' }
-        ];
-
-        let html = '';
-        services.forEach(service => {
-            html += `
-                <div onclick="showServiceDetails('${service.id}')" class="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md cursor-pointer border border-gray-100">
-                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
-                        <i class="fas ${service.icon} text-blue-600"></i>
-                    </div>
-                    <span class="flex-1 font-medium">${service.name}</span>
-                    <span class="text-blue-600 font-bold">১০০৳</span>
-                    <i class="fas fa-chevron-right text-gray-400 ml-2"></i>
-                </div>
-            `;
-        });
-        
-        const servicesList = document.getElementById('servicesList');
-        if (servicesList) servicesList.innerHTML = html;
-    }
-
     async function loadUserBalance() {
         if (!currentUser) return;
         const doc = await db.collection('users').doc(currentUser.uid).get();
@@ -465,40 +829,262 @@
         }
     }
 
-    window.showServiceDetails = function(serviceId) {
-        alert('সার্ভিস ডিটেইলস পেজ (পরবর্তীতে যুক্ত হবে)');
+    window.showServiceDetails = function(serviceId, serviceName) {
+        toggleMenu(); // মেনু বন্ধ করবে
+        showServiceDetailsPage(parseInt(serviceId), serviceName);
     };
 
-    // ---------- মেনু ফাংশন ----------
-    window.goToServices = function() {
-        toggleMenu();
-        document.getElementById('servicesList').scrollIntoView({ behavior: 'smooth' });
-    };
+    // ---------- ফায়ারবেস থেকে সার্ভিস লোড ----------
+    async function loadServicesFromFirebase() {
+        const snapshot = await db.collection('services').get();
+        if (!snapshot.empty) {
+            const fbServices = [];
+            snapshot.forEach(doc => {
+                fbServices.push({ id: doc.id, ...doc.data() });
+            });
+            if (fbServices.length > 0) {
+                services = fbServices;
+            }
+        }
+    }
 
-    window.goToOrders = function() {
-        toggleMenu();
-        alert('অর্ডার পেজ (পরবর্তীতে যুক্ত হবে)');
-    };
-
-    window.goToProfile = function() {
-        toggleMenu();
-        alert('প্রোফাইল পেজ (পরবর্তীতে যুক্ত হবে)');
-    };
-
-    // ---------- অ্যাডমিন প্যানেল (সংক্ষেপে) ----------
-    function renderAdminPanel() {
+    // ---------- এডমিন প্যানেল ----------
+    async function renderAdminPanel() {
+        await loadServicesFromFirebase();
+        
         app.innerHTML = `
             <div class="min-h-screen bg-gray-100">
-                <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 shadow-lg">
-                    <h1 class="text-xl font-bold text-center">এডমিন প্যানেল</h1>
+                <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 shadow-lg flex justify-between items-center">
+                    <h1 class="text-xl font-bold">এডমিন প্যানেল</h1>
+                    <button onclick="handleLogout()" class="bg-red-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-red-600">
+                        <i class="fas fa-sign-out-alt mr-1"></i> লগআউট
+                    </button>
                 </div>
+                
                 <div class="p-4">
-                    <p class="text-center py-8">এডমিন প্যানেল লোড হচ্ছে...</p>
+                    <!-- ট্যাব মেনু -->
+                    <div class="flex bg-white rounded-lg shadow-md p-1 mb-4">
+                        <button onclick="showAdminTab('users')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabUsers">ইউজার</button>
+                        <button onclick="showAdminTab('requests')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabRequests">রিকোয়েস্ট</button>
+                        <button onclick="showAdminTab('services')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabServices">সার্ভিস</button>
+                        <button onclick="showAdminTab('orders')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabOrders">অর্ডার</button>
+                    </div>
+
+                    <!-- কন্টেন্ট এরিয়া -->
+                    <div id="adminContent" class="bg-white rounded-lg shadow-md p-4"></div>
                 </div>
             </div>
         `;
-        // এডমিন ফাংশন পরে ইমপ্লিমেন্ট করব
+        
+        showAdminTab('users');
     }
+
+    // ---------- এডমিন ট্যাব ফাংশন ----------
+    window.showAdminTab = async function(tab) {
+        // ট্যাব অ্যাক্টিভ স্টাইল
+        ['Users', 'Requests', 'Services', 'Orders'].forEach(t => {
+            const el = document.getElementById(`tab${t}`);
+            if (el) {
+                if (t.toLowerCase() === tab) {
+                    el.classList.add('bg-blue-600', 'text-white');
+                    el.classList.remove('text-gray-600', 'bg-gray-100');
+                } else {
+                    el.classList.remove('bg-blue-600', 'text-white');
+                    el.classList.add('text-gray-600', 'bg-gray-100');
+                }
+            }
+        });
+
+        const content = document.getElementById('adminContent');
+        
+        if (tab === 'users') {
+            const snapshot = await db.collection('users').get();
+            let html = `
+                <h3 class="font-bold mb-3 text-lg flex items-center">
+                    <i class="fas fa-users text-blue-600 mr-2"></i>
+                    সকল ইউজার (${snapshot.size} জন)
+                </h3>
+            `;
+            
+            if (snapshot.empty) {
+                html += '<p class="text-gray-500 text-center py-4">কোন ইউজার নেই</p>';
+            } else {
+                html += '<div class="space-y-2">';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    html += `
+                        <div class="border p-3 rounded bg-white hover:shadow transition-shadow">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="font-medium">📱 ${data.phone}</p>
+                                    <p class="text-green-600 font-bold">ব্যালেন্স: ৳${data.balance || 0}</p>
+                                    <p class="text-xs text-gray-500">${new Date(data.createdAt?.toDate()).toLocaleDateString('bn-BD')}</p>
+                                </div>
+                                <button onclick="addBalance('${doc.id}', '${data.phone}')" class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600">
+                                    <i class="fas fa-plus-circle mr-1"></i>রিচার্জ
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            content.innerHTML = html;
+        }
+        
+        else if (tab === 'requests') {
+            const snapshot = await db.collection('moneyRequests').where('status', '==', 'pending').get();
+            let html = `
+                <h3 class="font-bold mb-3 text-lg flex items-center">
+                    <i class="fas fa-clock text-yellow-500 mr-2"></i>
+                    পেন্ডিং রিকোয়েস্ট (${snapshot.size} টি)
+                </h3>
+            `;
+            
+            if (snapshot.empty) {
+                html += '<p class="text-gray-500 text-center py-4">কোন পেন্ডিং রিকোয়েস্ট নেই</p>';
+            } else {
+                html += '<div class="space-y-2">';
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    html += `
+                        <div class="border-l-4 border-yellow-400 bg-yellow-50 p-3 rounded">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium">📱 ${data.userPhone}</p>
+                                    <p class="text-lg font-bold">💰 ৳${data.amount}</p>
+                                    <p class="text-sm text-gray-600">ট্রাআইডি: ${data.transactionId}</p>
+                                    <p class="text-xs text-gray-500">${new Date(data.timestamp?.toDate()).toLocaleString('bn-BD')}</p>
+                                </div>
+                                <div class="flex space-x-2">
+                                    <button onclick="approveRequest('${doc.id}', ${data.amount}, '${data.userId}')" 
+                                        class="bg-green-500 text-white px-3 py-1 rounded text-sm hover:bg-green-600">
+                                        <i class="fas fa-check mr-1"></i>অ্যাপ্রুভ
+                                    </button>
+                                    <button onclick="rejectRequest('${doc.id}')" 
+                                        class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600">
+                                        <i class="fas fa-times mr-1"></i>রিজেক্ট
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            content.innerHTML = html;
+        }
+        
+        else if (tab === 'services') {
+            let html = `
+                <h3 class="font-bold mb-3 text-lg flex items-center">
+                    <i class="fas fa-cog text-blue-600 mr-2"></i>
+                    সার্ভিস প্রাইস ম্যানেজ
+                </h3>
+                <div class="space-y-3">
+            `;
+            
+            services.forEach(service => {
+                html += `
+                    <div class="flex items-center gap-2 bg-gray-50 p-3 rounded">
+                        <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <i class="fas ${service.icon} text-blue-600"></i>
+                        </div>
+                        <span class="flex-1 font-medium">${service.name}</span>
+                        <input type="number" id="price${service.id}" value="${service.price}" class="w-20 border p-2 rounded text-center">
+                        <button onclick="updateServicePrice(${service.id})" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                            আপডেট
+                        </button>
+                    </div>
+                `;
+            });
+            
+            html += '</div>';
+            content.innerHTML = html;
+        }
+        
+        else if (tab === 'orders') {
+            const snapshot = await db.collection('orders').orderBy('timestamp', 'desc').limit(20).get();
+            let html = `
+                <h3 class="font-bold mb-3 text-lg flex items-center">
+                    <i class="fas fa-shopping-bag text-blue-600 mr-2"></i>
+                    সর্বশেষ অর্ডার সমূহ (${snapshot.size} টি)
+                </h3>
+            `;
+            
+            if (snapshot.empty) {
+                html += '<p class="text-gray-500 text-center py-4">কোন অর্ডার নেই</p>';
+            } else {
+                html += '<div class="space-y-2">';
+                snapshot.forEach(doc => {
+                    const order = doc.data();
+                    const date = new Date(order.timestamp?.toDate()).toLocaleString('bn-BD');
+                    html += `
+                        <div class="border p-3 rounded bg-white hover:shadow transition-shadow">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium">📱 ${order.userPhone}</p>
+                                    <p class="font-semibold">${order.serviceName}</p>
+                                    <p class="text-blue-600 font-bold">৳${order.price}</p>
+                                    <p class="text-xs text-gray-500">${date}</p>
+                                </div>
+                                <span class="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs">${order.status}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            content.innerHTML = html;
+        }
+    };
+
+    // ---------- এডমিন ফাংশন ----------
+    window.approveRequest = async function(requestId, amount, userId) {
+        await db.collection('moneyRequests').doc(requestId).update({ status: 'approved' });
+        
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+        const currentBalance = userDoc.data().balance || 0;
+        await userRef.update({ balance: currentBalance + amount });
+        
+        alert('✅ অ্যাপ্রুভ করা হয়েছে');
+        showAdminTab('requests');
+    };
+
+    window.rejectRequest = async function(requestId) {
+        await db.collection('moneyRequests').doc(requestId).update({ status: 'rejected' });
+        alert('❌ রিজেক্ট করা হয়েছে');
+        showAdminTab('requests');
+    };
+
+    window.updateServicePrice = async function(serviceId) {
+        const price = document.getElementById(`price${serviceId}`).value;
+        const service = services.find(s => s.id == serviceId);
+        
+        await db.collection('services').doc(serviceId.toString()).set({
+            name: service.name,
+            icon: service.icon,
+            price: parseInt(price)
+        });
+        
+        service.price = parseInt(price);
+        
+        alert(`✅ ${service.name} এর মূল্য ${price} টাকা সেট করা হয়েছে`);
+    };
+
+    window.addBalance = async function(userId, phone) {
+        const amount = prompt(`${phone} এর জন্য কত টাকা রিচার্জ করবেন?`, "100");
+        if (!amount) return;
+        
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+        const currentBalance = userDoc.data().balance || 0;
+        await userRef.update({ balance: currentBalance + parseInt(amount) });
+        
+        alert(`✅ ${phone} এর ব্যালেন্সে ${amount} টাকা যোগ করা হয়েছে`);
+        showAdminTab('users');
+    };
 
     // ---------- অথ স্টেট চেক ----------
     auth.onAuthStateChanged(async (user) => {
@@ -507,6 +1093,7 @@
             const phone = user.email.split('@')[0];
             
             if (phone === '01828407381') {
+                await loadServicesFromFirebase();
                 renderAdminPanel();
             } else {
                 renderHomePage();
@@ -515,10 +1102,6 @@
             renderLoginPage();
         }
     });
-
-    // উইন্ডোতে ফাংশনগুলো এক্সপোজ করা
-    window.renderLoginPage = renderLoginPage;
-    window.showRegisterPage = showRegisterPage;
 </script>
 
 <!-- কাস্টম অ্যানিমেশন -->
