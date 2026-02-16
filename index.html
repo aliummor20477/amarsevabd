@@ -35,17 +35,7 @@
     // গ্লোবাল ভেরিয়েবল
     let currentUser = null;
     let userBalance = 0;
-    let services = [
-        { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card', price: 100 },
-        { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy', price: 100 },
-        { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby', price: 100 },
-        { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit', price: 100 },
-        { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen', price: 100 },
-        { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit', price: 100 },
-        { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice', price: 100 },
-        { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line', price: 100 },
-        { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt', price: 100 }
-    ];
+    let services = []; // এখন খালি, Firebase থেকে লোড হবে
 </script>
 
 <!-- App Container -->
@@ -255,6 +245,11 @@
 
     // ---------- মেনুতে সার্ভিস লোড ----------
     function loadMenuServices() {
+        if (!services || services.length === 0) {
+            document.getElementById('menuServicesList').innerHTML = '<p class="text-center py-4">সার্ভিস লোড হচ্ছে...</p>';
+            return;
+        }
+        
         let html = '<div class="space-y-2">';
         services.forEach(service => {
             html += `
@@ -724,6 +719,8 @@
                 await loadServicesFromFirebase();
                 renderAdminPanel();
             } else {
+                // ইউজারদের জন্য সার্ভিস লোড
+                await loadServicesFromFirebase();
                 renderHomePage();
             }
         } catch (error) {
@@ -853,15 +850,16 @@
         showServiceDetailsPage(parseInt(serviceId), serviceName);
     };
 
-    // ---------- ফায়ারবেস থেকে সার্ভিস লোড / অটো ক্রিয়েট (অটোমেটিক ফিক্স) ----------
+    // ---------- ফায়ারবেস থেকে সার্ভিস লোড / অটো ক্রিয়েট (স্থায়ী ফিক্স) ----------
     async function loadServicesFromFirebase() {
         console.log('🔍 সার্ভিস চেক করা হচ্ছে...');
         const snapshot = await db.collection('services').get();
         
         if (snapshot.empty) {
-            console.log('⚠️ Firebase এ কোনো সার্ভিস নেই! অটোমেটিক তৈরি করা হচ্ছে...');
+            console.log('⚠️ Firebase এ কোনো সার্ভিস নেই! প্রথমবারের মতো তৈরি করা হচ্ছে...');
             
-            const allServices = [
+            // শুধু প্রথমবার Firebase খালি থাকলে ডিফল্ট সার্ভিস যোগ হবে
+            const defaultServices = [
                 { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card', price: 100 },
                 { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy', price: 100 },
                 { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby', price: 100 },
@@ -873,7 +871,7 @@
                 { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt', price: 100 }
             ];
             
-            for (const service of allServices) {
+            for (const service of defaultServices) {
                 await db.collection('services').doc(service.id.toString()).set({
                     name: service.name,
                     icon: service.icon,
@@ -882,60 +880,30 @@
                 console.log(`✅ ${service.name} যোগ করা হয়েছে`);
             }
             
-            services = allServices;
-            console.log('🎉 সব সার্ভিস অটোমেটিক তৈরি করা হয়েছে!');
-            
-        } else {
-            console.log(`📋 Firebase এ ${snapshot.size} টি সার্ভিস পাওয়া গেছে`);
-            
-            // চেক করি সবগুলো সার্ভিস আছে কিনা (1-9)
-            const existingIds = [];
-            const fbServices = [];
-            
-            snapshot.forEach(doc => {
-                const id = parseInt(doc.id);
-                existingIds.push(id);
-                fbServices.push({ id: id, ...doc.data() });
+            // Firebase থেকে আবার লোড করি (নিশ্চিত হওয়ার জন্য)
+            const newSnapshot = await db.collection('services').get();
+            services = [];
+            newSnapshot.forEach(doc => {
+                services.push({ id: parseInt(doc.id), ...doc.data() });
             });
             
-            // কোন আইডি নেই সেগুলো যোগ করি
-            const allIds = [1,2,3,4,5,6,7,8,9];
-            const missingIds = allIds.filter(id => !existingIds.includes(id));
+            console.log('🎉 সব সার্ভিস প্রথমবারের মতো তৈরি করা হয়েছে!');
             
-            if (missingIds.length > 0) {
-                console.log(`⚠️ ${missingIds.length} টি সার্ভিস নেই, সেগুলো যোগ করা হচ্ছে...`);
-                
-                const allServices = [
-                    { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card', price: 100 },
-                    { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy', price: 100 },
-                    { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby', price: 100 },
-                    { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit', price: 100 },
-                    { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen', price: 100 },
-                    { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit', price: 100 },
-                    { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice', price: 100 },
-                    { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line', price: 100 },
-                    { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt', price: 100 }
-                ];
-                
-                for (const id of missingIds) {
-                    const service = allServices.find(s => s.id === id);
-                    if (service) {
-                        await db.collection('services').doc(id.toString()).set({
-                            name: service.name,
-                            icon: service.icon,
-                            price: service.price
-                        });
-                        console.log(`✅ ${service.name} যোগ করা হয়েছে`);
-                        fbServices.push(service);
-                    }
-                }
-            }
+        } else {
+            // Firebase থেকে সার্ভিস লোড করি (এটাই মূল উৎস)
+            services = [];
+            snapshot.forEach(doc => {
+                services.push({ id: parseInt(doc.id), ...doc.data() });
+            });
             
             // আইডি অনুযায়ী সাজাই
-            fbServices.sort((a, b) => a.id - b.id);
-            services = fbServices;
-            console.log('📋 সব সার্ভিস লোড করা হয়েছে');
+            services.sort((a, b) => a.id - b.id);
+            console.log(`📋 Firebase থেকে ${services.length} টি সার্ভিস লোড করা হয়েছে`);
         }
+        
+        // কনসোলে দাম দেখাই (ডিবাগিং এর জন্য)
+        console.log('বর্তমান সার্ভিসের দাম:');
+        services.forEach(s => console.log(`   ${s.id}. ${s.name}: ${s.price}৳`));
     }
 
     // ---------- এডমিন প্যানেল ----------
@@ -1147,15 +1115,21 @@
         const price = document.getElementById(`price${serviceId}`).value;
         const service = services.find(s => s.id == serviceId);
         
+        // Firebase আপডেট
         await db.collection('services').doc(serviceId.toString()).set({
             name: service.name,
             icon: service.icon,
             price: parseInt(price)
         });
         
+        // লোকাল ভেরিয়েবল আপডেট
         service.price = parseInt(price);
         
         alert(`✅ ${service.name} এর মূল্য ${price} টাকা সেট করা হয়েছে`);
+        
+        // কনসোলে দেখাই
+        console.log('আপডেটের পর সার্ভিসের দাম:');
+        services.forEach(s => console.log(`   ${s.id}. ${s.name}: ${s.price}৳`));
     };
 
     window.addBalance = async function(userId, phone) {
@@ -1177,8 +1151,10 @@
             currentUser = user;
             const phone = user.email.split('@')[0];
             
+            // সবার জন্য প্রথমে সার্ভিস লোড করি
+            await loadServicesFromFirebase();
+            
             if (phone === '01828407381') {
-                await loadServicesFromFirebase();
                 renderAdminPanel();
             } else {
                 renderHomePage();
