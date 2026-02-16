@@ -2,293 +2,486 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>আমার সেবা অনলাইন বিডি</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>আলমার সেবা</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;700&display=swap');
-        body { font-family: 'Hind Siliguri', sans-serif; background-color: #f3f4f6; margin: 0; padding: 0; }
-        .sidebar { transition: 0.3s; width: 0; overflow: hidden; position: fixed; z-index: 100; top: 0; left: 0; height: 100%; background: white; }
-        .sidebar.active { width: 280px; border-right: 2px solid #ddd; }
-        .page-section { display: none; width: 100%; min-height: 100vh; }
-        .active-section { display: flex !important; flex-direction: column; }
-    </style>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
 </head>
-<body>
+<body class="bg-gray-100">
 
-    <div id="loginPage" class="page-section active-section bg-indigo-900 items-center justify-center p-4">
-        <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-sm text-center">
-            <h2 class="text-xl font-bold text-indigo-800 mb-6">লগইন করুন</h2>
-            <input type="email" id="lEmail" placeholder="ইমেইল" class="w-full p-3 border rounded-lg mb-4 outline-none">
-            <input type="password" id="lPass" placeholder="পাসওয়ার্ড" class="w-full p-3 border rounded-lg mb-6 outline-none">
-            <button onclick="handleLogin()" id="lBtn" class="w-full bg-indigo-600 text-white py-3 rounded-lg font-bold">লগইন</button>
-            <p class="mt-6 text-sm">একাউন্ট নেই? <button onclick="goToReg()" class="text-indigo-600 font-bold underline">রেজিস্ট্রেশন</button></p>
-            <button onclick="adminPrompt()" class="mt-8 text-[10px] text-gray-300 opacity-50 uppercase">Admin Access</button>
-        </div>
-    </div>
+<script>
+    // ------------------ আপনার Firebase Config (সেট করা আছে) ------------------
+    const firebaseConfig = {
+        apiKey: "AIzaSyBgpbx7dtJl9beKWx7BB0-w0C5sG-FgLvY",
+        authDomain: "amar-sheba-ea1ba.firebaseapp.com",
+        projectId: "amar-sheba-ea1ba",
+        storageBucket: "amar-sheba-ea1ba.firebasestorage.app",
+        messagingSenderId: "563271616190",
+        appId: "1:563271616190:web:8abf8874c75121696440ef",
+        measurementId: "G-XZ778FPRX1"
+    };
 
-    <div id="regPage" class="page-section bg-purple-900 items-center justify-center p-4">
-        <div class="bg-white p-6 rounded-2xl shadow-2xl w-full max-w-sm">
-            <h2 class="text-xl font-bold text-center text-purple-800 mb-6">নতুন একাউন্ট</h2>
-            <input type="text" id="rName" placeholder="আপনার নাম" class="w-full p-3 border rounded-lg mb-4 outline-none">
-            <input type="email" id="rEmail" placeholder="ইমেইল" class="w-full p-3 border rounded-lg mb-4 outline-none">
-            <input type="password" id="rPass" placeholder="পাসওয়ার্ড" class="w-full p-3 border rounded-lg mb-6 outline-none">
-            <button onclick="handleReg()" id="rBtn" class="w-full bg-purple-600 text-white py-3 rounded-lg font-bold">রেজিস্ট্রেশন</button>
-            <button onclick="goToLogin()" class="w-full mt-4 text-gray-500 text-xs text-center">লগইন পেজ</button>
-        </div>
-    </div>
+    // Firebase Initialize
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
 
-    <div id="mainDashboard" class="page-section flex-col">
-        <nav class="bg-indigo-700 text-white p-4 flex justify-between items-center shadow-lg sticky top-0 z-50">
-            <button onclick="toggleSidebar()"><i class="fas fa-bars text-xl"></i></button>
-            <span class="font-bold text-sm">আমার সেবা অনলাইন বিডি</span>
-            <button onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
-        </nav>
+    // গ্লোবাল ভেরিয়েবল
+    let currentUser = null;
+    let userBalance = 0;
+</script>
 
-        <div class="p-4 w-full max-w-md mx-auto">
-            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white text-center shadow-lg mb-6">
-                <p class="text-xs opacity-80">স্বাগতম, <span id="userName">ইউজার</span></p>
-                <p class="text-[10px] mt-1 uppercase">ব্যালেন্স</p>
-                <h2 class="text-3xl font-bold">৳ <span id="balanceDisplay">0.00</span></h2>
-                <div class="flex gap-2 justify-center mt-4">
-                   <button onclick="showService('addmoney')" class="bg-white text-indigo-700 px-4 py-2 rounded-full font-bold text-xs shadow-md">+ Add Money</button>
-                   <button onclick="showSection('orderList')" class="bg-indigo-500 text-white px-4 py-2 rounded-full font-bold text-xs shadow-md border border-white/20">অর্ডার সমূহ</button>
+<!-- App Container -->
+<div id="app" class="max-w-md mx-auto bg-white min-h-screen shadow-lg relative"></div>
+
+<script>
+    const app = document.getElementById('app');
+
+    // ---------- প্রফেশনাল লগইন পেজ ----------
+    function renderLoginPage() {
+        app.innerHTML = `
+            <div class="min-h-screen bg-gradient-to-br from-blue-600 to-sky-400 flex items-center justify-center p-4">
+                <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl w-full max-w-md p-8 transform transition-all duration-300 hover:scale-105">
+                    <!-- লোগো ও হেডার -->
+                    <div class="text-center mb-8">
+                        <div class="bg-blue-600 w-20 h-20 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                            <i class="fas fa-hand-holding-heart text-white text-4xl"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold text-gray-800 mb-2">আলমার সেবা</h1>
+                        <p class="text-gray-500">আপনার বিশ্বস্ত অনলাইন সেবা প্রদানকারী</p>
+                    </div>
+
+                    <!-- ফর্ম কার্ড -->
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-inner">
+                        <h2 class="text-xl font-semibold text-gray-700 mb-4 flex items-center">
+                            <i class="fas fa-lock text-blue-600 mr-2"></i>
+                            অ্যাকাউন্ট লগইন
+                        </h2>
+                        
+                        <!-- ইনপুট ফিল্ডস -->
+                        <div class="space-y-4">
+                            <div class="relative">
+                                <i class="fas fa-phone-alt absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="text" id="phone" placeholder="মোবাইল নাম্বার" 
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all">
+                            </div>
+                            
+                            <div class="relative">
+                                <i class="fas fa-key absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                                <input type="password" id="password" placeholder="পাসওয়ার্ড" 
+                                    class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all">
+                            </div>
+                        </div>
+
+                        <!-- বাটন গ্রুপ -->
+                        <div class="space-y-3 mt-6">
+                            <button onclick="handleLogin()" 
+                                class="w-full bg-gradient-to-r from-blue-600 to-sky-500 text-white py-3 rounded-lg font-semibold shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center">
+                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                লগইন করুন
+                            </button>
+                            
+                            <button onclick="handleRegister()" 
+                                class="w-full bg-white border-2 border-green-500 text-green-600 py-3 rounded-lg font-semibold hover:bg-green-50 transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                নতুন রেজিস্ট্রেশন
+                            </button>
+                        </div>
+
+                        <!-- হেল্প টেক্সট -->
+                        <p class="text-xs text-center text-gray-400 mt-6">
+                            <i class="fas fa-shield-alt mr-1"></i>
+                            আপনার তথ্য ১০০% নিরাপদ
+                        </p>
+                    </div>
+
+                    <!-- ফুটার -->
+                    <div class="text-center mt-6">
+                        <p class="text-sm text-gray-500">
+                            <i class="fas fa-phone mr-1"></i>
+                            জরুরি প্রয়োজনে: 01753119223
+                        </p>
+                    </div>
                 </div>
             </div>
-            
-            <div id="serviceContent" class="space-y-4">
-                <div class="text-center p-10 text-gray-400 italic text-sm">মেনু থেকে সার্ভিস বেছে নিন বস</div>
-            </div>
+        `;
+    }
 
-            <div class="mt-10 p-4">
-                <a href="https://wa.me/8801753119223" target="_blank" class="flex items-center justify-center gap-3 bg-green-500 text-white p-4 rounded-2xl shadow-lg hover:bg-green-600 transition-all">
-                    <i class="fab fa-whatsapp text-2xl"></i>
-                    <div class="text-left">
-                        <p class="text-[10px] uppercase font-bold opacity-80">যেকোনো প্রয়োজনে</p>
-                        <p class="text-sm font-bold">সাপোর্ট WhatsApp (বস)</p>
+    // ---------- হোমপেজ ----------
+    function renderHomePage() {
+        app.innerHTML = `
+            <div>
+                <!-- মেনু বার -->
+                <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 flex justify-between items-center shadow-lg">
+                    <i class="fas fa-bars text-2xl cursor-pointer hover:opacity-80"></i>
+                    <h1 class="text-xl font-bold tracking-wide">আলমার সেবা</h1>
+                    <i class="fas fa-user-circle text-2xl cursor-pointer hover:opacity-80"></i>
+                </div>
+
+                <!-- ব্যালেন্স ও অ্যাড মানি -->
+                <div class="bg-gradient-to-br from-blue-500 to-sky-400 text-white p-6 shadow-inner">
+                    <div class="text-center">
+                        <p class="text-sm opacity-90 mb-1">বর্তমান ব্যালেন্স</p>
+                        <p class="text-4xl font-bold mb-4" id="balanceDisplay">৳ 0</p>
+                        <button onclick="showAddMoneyModal()" class="bg-white text-blue-600 px-8 py-2 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-200">
+                            <i class="fas fa-plus-circle mr-1"></i>Add Money
+                        </button>
                     </div>
-                </a>
+                </div>
+
+                <!-- অর্ডার সমূহ -->
+                <div class="p-4 border-b bg-gray-50">
+                    <h2 class="font-semibold text-gray-700 mb-2 flex items-center">
+                        <i class="fas fa-shopping-bag text-blue-600 mr-2"></i>
+                        অর্ডার সমূহ
+                    </h2>
+                    <div id="ordersList" class="text-sm text-gray-500">
+                        <p class="text-center py-3 bg-white rounded-lg shadow-sm">কোন অর্ডার নেই</p>
+                    </div>
+                </div>
+
+                <!-- WhatsApp বাটন -->
+                <div class="p-4">
+                    <a href="https://wa.me/8801753119223" target="_blank" class="flex items-center justify-center bg-green-500 text-white p-3 rounded-lg shadow-md hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+                        <i class="fab fa-whatsapp text-2xl mr-2"></i>
+                        <span class="font-semibold">01753119223 - WhatsApp এ যোগাযোগ</span>
+                    </a>
+                </div>
+
+                <!-- সার্ভিস লিস্ট -->
+                <div class="p-4">
+                    <h2 class="font-semibold text-gray-700 mb-3 flex items-center">
+                        <i class="fas fa-list text-blue-600 mr-2"></i>
+                        সার্ভিস সমূহ
+                    </h2>
+                    <div class="space-y-2" id="servicesList"></div>
+                </div>
             </div>
-        </div>
-    </div>
+        `;
+        loadServices();
+        loadUserBalance();
+        loadOrders();
+    }
 
-    <div id="orderList" class="page-section bg-white flex-col">
-        <nav class="bg-gray-800 text-white p-4 flex items-center gap-4 shadow sticky top-0 z-50">
-            <button onclick="showSection('mainDashboard')"><i class="fas fa-arrow-left text-xl"></i></button>
-            <span class="font-bold">আমার অর্ডার সমূহ</span>
-        </nav>
-        <div class="p-4 text-center">
-            <div class="bg-blue-50 p-4 rounded-lg mb-4 text-xs text-blue-800 text-left">
-                <i class="fas fa-info-circle"></i> বস, অর্ডার করার পর আপনার ব্যালেন্স থেকে অটো টাকা কেটে নেওয়া হবে।
+    // ---------- এডমিন প্যানেল ----------
+    function renderAdminPanel() {
+        app.innerHTML = `
+            <div class="min-h-screen bg-gray-100">
+                <div class="bg-gradient-to-r from-blue-700 to-sky-600 text-white p-4 shadow-lg">
+                    <h1 class="text-xl font-bold text-center">এডমিন প্যানেল</h1>
+                </div>
+                
+                <div class="p-4">
+                    <!-- ট্যাব মেনু -->
+                    <div class="flex bg-white rounded-lg shadow-md p-1 mb-4">
+                        <button onclick="showAdminTab('requests')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabRequests">রিকোয়েস্ট</button>
+                        <button onclick="showAdminTab('services')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabServices">সার্ভিস</button>
+                        <button onclick="showAdminTab('users')" class="flex-1 py-2 text-center rounded-lg text-sm font-medium transition-all" id="tabUsers">ইউজার</button>
+                    </div>
+
+                    <!-- কন্টেন্ট এরিয়া -->
+                    <div id="adminContent" class="bg-white rounded-lg shadow-md p-4"></div>
+                </div>
             </div>
-            <div class="py-20 text-gray-400 text-sm italic">আপনার অর্ডারের তথ্য শিটে জমা হয়েছে।</div>
-        </div>
-    </div>
+        `;
+        showAdminTab('requests');
+    }
 
-    <div id="sidebar" class="sidebar shadow-2xl overflow-y-auto">
-        <div class="bg-indigo-800 p-5 text-white font-bold text-center">সার্ভিস মেনু</div>
-        <div class="p-2 flex flex-col text-sm">
-            <button onclick="showSection('mainDashboard'); toggleSidebar();" class="text-left p-4 border-b flex items-center gap-3">
-                <i class="fas fa-th-large text-indigo-500"></i> হোম ড্যাশবোর্ড
-            </button>
-            <button onclick="showSection('orderList'); toggleSidebar();" class="text-left p-4 border-b text-indigo-600 font-bold flex items-center gap-3">
-                <i class="fas fa-list-check"></i> আমার অর্ডার সমূহ
-            </button>
+    // ---------- ফাংশনালিটি ----------
+    window.handleLogin = async function() {
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+        if (!phone || !password) return alert('ফোন ও পাসওয়ার্ড দিন');
+        
+        try {
+            const email = phone + '@app.com';
+            await auth.signInWithEmailAndPassword(email, password);
             
-            <div class="px-4 py-2 text-[10px] uppercase text-gray-400 font-bold bg-gray-50">সার্ভিসসমূহ</div>
-            
-            <button onclick="showService('nid')" class="text-left p-4 border-b flex items-center gap-3">
-                <i class="far fa-id-card text-gray-600"></i> এনআইডি ডাউনলোড (৭০৳)
-            </button>
-            <button onclick="showService('server')" class="text-left p-4 border-b flex items-center gap-3">
-                <i class="fas fa-copy text-gray-600"></i> সার্ভার কপি (২০৳)
-            </button>
-            <button onclick="showService('birth')" class="text-left p-4 border-b flex items-center gap-3">
-                <i class="fas fa-file-invoice text-gray-600"></i> নতুন জন্মনিবন্ধন আবেদন
-            </button>
-            <button onclick="showService('birth_phone')" class="text-left p-4 border-b font-bold text-indigo-700 flex items-center gap-3">
-                <i class="fas fa-phone-flip text-indigo-600"></i> জন্মনিবন্ধন ফোন নম্বর পরিবর্তন
-            </button>
-            <button onclick="showService('num_to_nid')" class="text-left p-4 border-b flex items-center gap-3">
-                <i class="fas fa-search-plus text-gray-600"></i> নাম্বার টু এনআইডি (৫০০৳)
-            </button>
-            <button onclick="showService('call_list')" class="text-left p-4 border-b font-bold text-green-700 flex items-center gap-3">
-                <i class="fas fa-phone-volume text-green-600"></i> মোবাইল কল লিস্ট (৬০০৳)
-            </button>
-            <button onclick="showService('etin')" class="text-left p-4 border-b text-red-500 font-bold bg-red-50 flex items-center gap-3">
-                <i class="fas fa-file-circle-exclamation text-red-500"></i> E-TIN ডাউনলোড (বন্ধ)
-            </button>
-            
-            <button onclick="toggleSidebar()" class="mt-6 bg-red-500 text-white p-3 rounded font-bold">বন্ধ করুন</button>
-        </div>
-    </div>
-
-    <div id="adminPanel" class="page-section bg-slate-900 text-white">
-        <nav class="bg-slate-800 p-4 flex justify-between items-center sticky top-0">
-            <span class="font-bold text-green-400">এডমিন প্যানেল (বস)</span>
-            <button onclick="location.reload()" class="bg-red-600 px-3 py-1 rounded text-xs font-bold">EXIT</button>
-        </nav>
-        <div class="p-4 w-full" id="adminUserList"></div>
-    </div>
-
-    <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzqN3n2wuFDD18IieUGFD7kaErE_GxnmeG-OLskmgyzerO6SQM8ZZg5D1AyfTGkGXuH/exec'; 
-        let loggedInEmail = "";
-        let currentBalance = 0;
-
-        window.onload = function() {
-            const savedEmail = localStorage.getItem('userEmail');
-            const savedName = localStorage.getItem('userName');
-            const savedBal = localStorage.getItem('userBal');
-            
-            if(savedEmail && savedName) {
-                loggedInEmail = savedEmail;
-                currentBalance = parseFloat(savedBal) || 0;
-                document.getElementById('userName').innerText = savedName;
-                document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(2);
-                showSection('mainDashboard');
+            if (phone === '01828407381') {
+                renderAdminPanel();
+            } else {
+                renderHomePage();
             }
-        };
-
-        function showSection(id) { 
-            // সব সেকশন থেকে একটিভ ক্লাস সরানো
-            document.querySelectorAll('.page-section').forEach(s => {
-                s.classList.remove('active-section');
-            }); 
-            // কাঙ্ক্ষিত সেকশন দেখানো
-            const target = document.getElementById(id);
-            if(target) {
-                target.classList.add('active-section');
-            }
+        } catch (error) {
+            alert('লগইন ব্যর্থ: ' + error.message);
         }
+    };
 
-        function toggleSidebar() { 
-            document.getElementById('sidebar').classList.toggle('active'); 
-        }
-
-        function handleLogin() {
-            const e = document.getElementById('lEmail').value, p = document.getElementById('lPass').value;
-            if(!e || !p) return alert("তথ্য দাও বস!");
-            document.getElementById('lBtn').innerText = "অপেক্ষা করুন...";
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify({ action: 'login', email: e, pass: p }) })
-            .then(res => res.json()).then(data => {
-                if (data.status === "Success") {
-                    currentBalance = parseFloat(data.balance);
-                    localStorage.setItem('userEmail', e);
-                    localStorage.setItem('userName', data.name);
-                    localStorage.setItem('userBal', currentBalance);
-                    loggedInEmail = e;
-                    document.getElementById('userName').innerText = data.name;
-                    document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(2);
-                    showSection('mainDashboard');
-                } else alert("ভুল ইমেইল বা পাসওয়ার্ড বস!");
-                document.getElementById('lBtn').innerText = "লগইন";
+    window.handleRegister = async function() {
+        const phone = document.getElementById('phone').value;
+        const password = document.getElementById('password').value;
+        if (!phone || !password) return alert('ফোন ও পাসওয়ার্ড দিন');
+        
+        try {
+            const email = phone + '@app.com';
+            const result = await auth.createUserWithEmailAndPassword(email, password);
+            
+            await db.collection('users').doc(result.user.uid).set({
+                phone: phone,
+                email: email,
+                balance: 0,
+                createdAt: new Date()
             });
-        }
-
-        function logout() { localStorage.clear(); location.reload(); }
-
-        function submitOrderWithDeduction(service, price, details) {
-            price = parseFloat(price);
-            if (currentBalance < price) return alert("ব্যালেন্স নাই বস!");
-            if (!confirm(service + " এর জন্য ৳" + price + " কাটবে। রাজি?")) return;
             
-            const newBalance = currentBalance - price;
-            fetch(scriptURL, { method: 'POST', body: JSON.stringify({ action: 'updateBalance', email: loggedInEmail, newBalance: newBalance }) })
-            .then(() => {
-                currentBalance = newBalance;
-                localStorage.setItem('userBal', currentBalance);
-                document.getElementById('balanceDisplay').innerText = currentBalance.toFixed(2);
-                fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'serviceOrder', email: loggedInEmail, service: service, details: details }) })
-                .then(() => { alert("অর্ডার সফল!"); location.reload(); });
-            });
+            alert('রেজিস্ট্রেশন সফল! এখন লগইন করুন');
+        } catch (error) {
+            alert('রেজিস্ট্রেশন ব্যর্থ: ' + error.message);
         }
+    };
 
-        function showService(t) {
-            if(document.getElementById('sidebar').classList.contains('active')) toggleSidebar();
-            let html = "";
-            if(t === 'addmoney') {
-                html = `<div class="bg-white p-5 rounded-xl shadow border-t-4 border-green-500 text-center">
-                    <h3 class="font-bold text-sm mb-2">টাকা অ্যাড করুন</h3>
-                    <p class="text-xs font-bold text-blue-600 mb-4">বিকাশ: 01828407381</p>
-                    <input type="number" id="amt" placeholder="পরিমাণ" class="w-full p-2 border mb-3 rounded text-sm outline-none">
-                    <input type="text" id="trx" placeholder="Transaction ID" class="w-full p-2 border mb-4 rounded text-sm outline-none">
-                    <button onclick="submitNormalOrder('Add Money', 'Amt: '+document.getElementById('amt').value+' | Trx: '+document.getElementById('trx').value)" class="w-full bg-green-600 text-white py-2 rounded font-bold">সাবমিট</button>
-                </div>`;
-            } else if(t === 'nid') { html = createUI("এনআইডি ডাউনলোড", 70, "আইডি নম্বর", "জন্ম তারিখ"); }
-            else if(t === 'server') { html = createUI("সার্ভার কপি", 20, "এনআইডি নম্বর", "জন্ম তারিখ"); }
-            else if(t === 'num_to_nid') { html = createUI("নাম্বার টু এনআইডি", 500, "ফোন নম্বর", "অন্যান্য"); }
-            else if(t === 'call_list') {
-                html = `<div class="bg-white p-5 rounded-xl shadow border-t-4 border-green-600 text-center">
-                    <h3 class="font-bold mb-3 text-green-800 text-sm">মোবাইল কল লিস্ট (৬০০৳)</h3>
-                    <input type="text" id="cNum" placeholder="টার্গেট নম্বর" class="w-full p-2 border mb-3 rounded text-sm outline-none">
-                    <button onclick="submitOrderWithDeduction('Mobile Call List', 600, 'Number: '+document.getElementById('cNum').value)" class="w-full bg-green-600 text-white py-2 rounded font-bold text-sm">অর্ডার দিন</button>
-                </div>`;
-            } else if(t === 'etin') { html = `<div class="bg-red-50 p-6 rounded-xl text-center text-red-600 font-bold">সার্ভিসটি বন্ধ</div>`; }
-            else if(t === 'birth_phone') {
-                html = `<div class="bg-white p-5 rounded-xl shadow border-t-4 border-indigo-600">
-                    <h3 class="font-bold mb-3 text-indigo-800 text-sm text-center">ফোন পরিবর্তন (৩০০৳)</h3>
-                    <input type="text" id="v1" placeholder="জন্মনিবন্ধন নম্বর" class="w-full p-2 border mb-2 rounded text-xs outline-none">
-                    <input type="text" id="v2" placeholder="নতুন ফোন নম্বর" class="w-full p-2 border mb-3 rounded text-xs outline-none">
-                    <button onclick="submitOrderWithDeduction('Birth Phone Change', 300, 'ID: '+document.getElementById('v1').value+' | Phone: '+document.getElementById('v2').value)" class="w-full bg-indigo-600 text-white py-2 rounded font-bold text-sm">সাবমিট</button>
-                </div>`;
-            } else if(t === 'birth') {
-                html = `<div class="bg-white p-5 rounded-xl shadow border border-indigo-200">
-                    <h3 class="font-bold mb-3 text-indigo-700 text-sm text-center underline">নতুন জন্মনিবন্ধন আবেদন</h3>
-                    <select id="birthCity" class="w-full p-2 border mb-3 rounded text-sm outline-none bg-gray-50">
-                        <option value="1500">চট্টগ্রাম (১৫০০৳)</option>
-                        <option value="1200">ঢাকা (১২০০৳)</option>
-                        <option value="2000">কুমিল্লা (২০০০৳)</option>
-                    </select>
-                    <textarea id="birthInfo" placeholder="বিস্তারিত তথ্য লেখো..." rows="3" class="w-full p-2 border mb-3 rounded text-xs outline-none"></textarea>
-                    <button onclick="let s=document.getElementById('birthCity'); submitOrderWithDeduction('New Birth App', s.value, 'City: '+s.options[s.selectedIndex].text+' | Info: '+document.getElementById('birthInfo').value)" class="w-full bg-indigo-600 text-white py-2 rounded font-bold text-sm">সাবমিট</button>
-                </div>`;
+    // Add Money Modal
+    window.showAddMoneyModal = function() {
+        app.innerHTML += `
+            <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 animate-fade-in" id="modal">
+                <div class="bg-white rounded-2xl p-6 w-full max-w-md transform transition-all duration-300 scale-100">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800">অ্যাড মানি</h3>
+                    
+                    <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                        <p class="text-sm text-gray-600 mb-1">বিকাশ পার্সোনাল</p>
+                        <p class="text-lg font-bold text-blue-600">01828407381</p>
+                        <button onclick="copyNumber()" class="text-blue-500 text-sm mt-1 hover:underline">
+                            <i class="far fa-copy mr-1"></i>নাম্বার কপি করুন
+                        </button>
+                    </div>
+                    
+                    <input type="number" id="amount" placeholder="পরিমাণ (টাকা)" class="w-full p-3 border rounded-lg mb-3">
+                    <input type="text" id="trxId" placeholder="ট্রানজেকশন আইডি" class="w-full p-3 border rounded-lg mb-4">
+                    
+                    <button onclick="submitMoneyRequest()" class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors mb-2">
+                        সাবমিট রিকোয়েস্ট
+                    </button>
+                    <button onclick="closeModal()" class="w-full bg-gray-200 text-gray-700 p-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors">
+                        বন্ধ করুন
+                    </button>
+                </div>
+            </div>
+        `;
+    };
+
+    window.copyNumber = function() {
+        navigator.clipboard.writeText('01828407381');
+        alert('নাম্বার কপি হয়েছে!');
+    };
+
+    window.closeModal = function() {
+        document.getElementById('modal').remove();
+    };
+
+    window.submitMoneyRequest = async function() {
+        const amount = document.getElementById('amount').value;
+        const trxId = document.getElementById('trxId').value;
+        
+        if (!amount || !trxId) return alert('সব তথ্য দিন');
+        
+        await db.collection('moneyRequests').add({
+            userId: currentUser.uid,
+            userPhone: currentUser.email.replace('@app.com', ''),
+            amount: parseInt(amount),
+            transactionId: trxId,
+            status: 'pending',
+            timestamp: new Date()
+        });
+        
+        alert('রিকোয়েস্ট পাঠানো হয়েছে');
+        closeModal();
+    };
+
+    // সার্ভিস লোড
+    async function loadServices() {
+        const services = [
+            { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card' },
+            { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy' },
+            { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby' },
+            { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit' },
+            { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen' },
+            { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit' },
+            { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice' },
+            { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line' },
+            { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt' }
+        ];
+
+        let html = '';
+        services.forEach(service => {
+            html += `
+                <div onclick="showServiceDetails('${service.id}')" class="flex items-center p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-all cursor-pointer border border-gray-100">
+                    <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center mr-3">
+                        <i class="fas ${service.icon} text-blue-600"></i>
+                    </div>
+                    <span class="flex-1 font-medium">${service.name}</span>
+                    <span class="text-blue-600 font-bold">১০০৳</span>
+                    <i class="fas fa-chevron-right text-gray-400 ml-2"></i>
+                </div>
+            `;
+        });
+        document.getElementById('servicesList').innerHTML = html;
+    }
+
+    async function loadUserBalance() {
+        if (!currentUser) return;
+        const doc = await db.collection('users').doc(currentUser.uid).get();
+        if (doc.exists) {
+            userBalance = doc.data().balance || 0;
+            document.getElementById('balanceDisplay').textContent = `৳ ${userBalance}`;
+        }
+    }
+
+    function loadOrders() {
+        // অর্ডার লোড করার ফাংশন (পরবর্তীতে ইমপ্লিমেন্ট)
+    }
+
+    // ---------- অ্যাডমিন ফাংশন ----------
+    window.showAdminTab = async function(tab) {
+        // ট্যাব অ্যাক্টিভ স্টাইল
+        ['Requests', 'Services', 'Users'].forEach(t => {
+            const el = document.getElementById(`tab${t}`);
+            if (el) {
+                if (t.toLowerCase() === tab) {
+                    el.classList.add('bg-blue-600', 'text-white');
+                    el.classList.remove('text-gray-600');
+                } else {
+                    el.classList.remove('bg-blue-600', 'text-white');
+                    el.classList.add('text-gray-600');
+                }
             }
-            document.getElementById('serviceContent').innerHTML = html;
-        }
+        });
 
-        function createUI(t, p, p1, p2) {
-            return `<div class="bg-white p-4 rounded-xl shadow border-t-4 border-indigo-600">
-                <h3 class="font-bold mb-3 text-sm text-indigo-800 text-center">${t} (৳${p})</h3>
-                <input type="text" id="f1" placeholder="${p1}" class="w-full p-2 border mb-2 rounded text-xs outline-none">
-                <input type="text" id="f2" placeholder="${p2}" class="w-full p-2 border mb-3 rounded text-xs outline-none">
-                <button onclick="submitOrderWithDeduction('${t}', ${p}, '${p1}: '+document.getElementById('f1').value+' | ${p2}: '+document.getElementById('f2').value)" class="w-full bg-indigo-600 text-white py-2 rounded font-bold text-sm">অর্ডার দিন</button>
-            </div>`;
-        }
-
-        function submitNormalOrder(service, details) {
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'serviceOrder', email: loggedInEmail, service: service, details: details }) })
-            .then(() => { alert("সফল!"); location.reload(); });
-        }
-
-        function goToReg() { showSection('regPage'); }
-        function goToLogin() { showSection('loginPage'); }
-        function handleReg() {
-            const n = document.getElementById('rName').value, e = document.getElementById('rEmail').value, p = document.getElementById('rPass').value;
-            if(!n || !e || !p) return alert("সব পূরণ করো বস!");
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'register', name: n, email: e, pass: p }) }).then(() => { alert("সফল!"); location.reload(); });
-        }
-        function adminPrompt() { if(prompt("কোড:") === "boss77") { showSection('adminPanel'); loadUsers(); } }
-        function loadUsers() {
-            fetch(scriptURL + "?action=getUsers").then(res => res.json()).then(users => {
-                let h = "";
-                users.forEach(u => {
-                    h += `<div class="bg-slate-800 p-3 rounded-lg mb-2 flex justify-between items-center text-[10px]">
-                        <div><b>${u.name}</b><br>${u.email}<br><span class="text-green-400">৳ ${u.balance}</span></div>
-                        <button onclick="addMoneyAdmin('${u.email}', ${u.balance})" class="bg-green-600 px-3 py-1 rounded">+ টাকা</button>
-                    </div>`;
+        const content = document.getElementById('adminContent');
+        
+        if (tab === 'requests') {
+            const snapshot = await db.collection('moneyRequests').where('status', '==', 'pending').get();
+            let html = '<h3 class="font-bold mb-3 text-lg">পেন্ডিং রিকোয়েস্ট</h3>';
+            
+            if (snapshot.empty) {
+                html += '<p class="text-gray-500 text-center py-4">কোন পেন্ডিং রিকোয়েস্ট নেই</p>';
+            } else {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    html += `
+                        <div class="border-l-4 border-yellow-400 bg-yellow-50 p-3 rounded mb-2">
+                            <p class="font-medium">📱 ${data.userPhone}</p>
+                            <p class="text-lg font-bold">💰 ৳${data.amount}</p>
+                            <p class="text-sm text-gray-600">ট্রাআইডি: ${data.transactionId}</p>
+                            <button onclick="approveRequest('${doc.id}', ${data.amount}, '${data.userId}')" 
+                                class="mt-2 bg-green-500 text-white px-4 py-1 rounded text-sm hover:bg-green-600 transition-colors">
+                                <i class="fas fa-check mr-1"></i>অ্যাপ্রুভ
+                            </button>
+                        </div>
+                    `;
                 });
-                document.getElementById('adminUserList').innerHTML = h;
-            });
-        }
-        function addMoneyAdmin(email, currentBal) {
-            const amount = prompt("পরিমাণ:");
-            if(amount) {
-                const newTotal = parseFloat(currentBal) + parseFloat(amount);
-                fetch(scriptURL, { method: 'POST', body: JSON.stringify({ action: 'updateBalance', email, newBalance: newTotal }) }).then(() => { alert("সফল!"); loadUsers(); });
             }
+            content.innerHTML = html;
         }
-    </script>
+        
+        if (tab === 'services') {
+            let html = '<h3 class="font-bold mb-3 text-lg">সার্ভিস প্রাইস ম্যানেজ</h3>';
+            for (let i = 1; i <= 9; i++) {
+                html += `
+                    <div class="flex items-center gap-2 mb-2 bg-gray-50 p-2 rounded">
+                        <span class="w-40">সার্ভিস ${i}</span>
+                        <input type="number" id="price${i}" value="100" class="border p-2 rounded flex-1">
+                        <button onclick="updatePrice(${i})" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
+                            আপডেট
+                        </button>
+                    </div>
+                `;
+            }
+            content.innerHTML = html;
+        }
+        
+        if (tab === 'users') {
+            const snapshot = await db.collection('users').get();
+            let html = '<h3 class="font-bold mb-3 text-lg">সকল ইউজার</h3>';
+            
+            if (snapshot.empty) {
+                html += '<p class="text-gray-500 text-center py-4">কোন ইউজার নেই</p>';
+            } else {
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    html += `
+                        <div class="border p-3 rounded mb-2 bg-white hover:shadow transition-shadow">
+                            <p class="font-medium">📱 ${data.phone}</p>
+                            <p class="text-green-600 font-bold">ব্যালেন্স: ৳${data.balance || 0}</p>
+                            <p class="text-xs text-gray-500">${new Date(data.createdAt?.toDate()).toLocaleDateString('bn-BD')}</p>
+                        </div>
+                    `;
+                });
+            }
+            content.innerHTML = html;
+        }
+    };
+
+    window.approveRequest = async function(requestId, amount, userId) {
+        await db.collection('moneyRequests').doc(requestId).update({ status: 'approved' });
+        
+        const userRef = db.collection('users').doc(userId);
+        const userDoc = await userRef.get();
+        const currentBalance = userDoc.data().balance || 0;
+        await userRef.update({ balance: currentBalance + amount });
+        
+        alert('✅ অ্যাপ্রুভ করা হয়েছে');
+        showAdminTab('requests');
+    };
+
+    window.updatePrice = function(serviceId) {
+        const price = document.getElementById(`price${serviceId}`).value;
+        alert(`সার্ভিস ${serviceId} এর প্রাইস ${price} টাকা সেট করা হয়েছে (Firebase এ সেভ হবে)`);
+    };
+
+    window.showServiceDetails = function(serviceId) {
+        alert('সার্ভিস ডিটেইলস পেজ (পরবর্তীতে যুক্ত হবে)');
+    };
+
+    // ---------- অথ স্টেট চেক ----------
+    auth.onAuthStateChanged(async (user) => {
+        if (user) {
+            currentUser = user;
+            const phone = user.email.replace('@app.com', '');
+            
+            if (phone === '01828407381') {
+                renderAdminPanel();
+            } else {
+                renderHomePage();
+            }
+        } else {
+            renderLoginPage();
+        }
+    });
+</script>
+
+<!-- কাস্টম অ্যানিমেশন -->
+<style>
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .animate-fade-in {
+        animation: fadeIn 0.3s ease-in-out;
+    }
+    
+    /* মডার্ন স্ক্রলবার */
+    ::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 3px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+</style>
 </body>
 </html>
