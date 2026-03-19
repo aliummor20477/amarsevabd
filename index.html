@@ -15,7 +15,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         
         * {
             font-family: 'Hind Siliguri', sans-serif;
@@ -25,7 +24,7 @@
             font-family: 'Inter', sans-serif;
         }
         
-        /* প্রিমিয়াম অ্যানিমেশন */
+        /* অ্যানিমেশন */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-5px); }
@@ -37,17 +36,6 @@
             to { transform: translateY(0); opacity: 1; }
         }
         
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.5); }
-            70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
-        }
-        
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-        
         .animate-float {
             animation: float 3s ease-in-out infinite;
         }
@@ -56,350 +44,13 @@
             animation: slideIn 0.3s ease-out;
         }
         
-        .animate-pulse-custom {
-            animation: pulse 2s infinite;
-        }
-        
-        .shimmer-effect {
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            background-size: 1000px 100%;
-            animation: shimmer 2s infinite;
-        }
-        
-        /* প্রিমিয়াম গ্রেডিয়েন্ট - নতুন প্রফেশনাল কালার */
+        /* গ্রেডিয়েন্ট */
         .gradient-primary {
             background: linear-gradient(135deg, #1e2a3a 0%, #2c3e50 100%);
         }
         
-        .gradient-secondary {
-            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
-        }
-        
-        .gradient-success {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-        
-        .gradient-info {
-            background: linear-gradient(135deg, #2980b9 0%, #6dd5fa 100%);
-        }
-        
-        .gradient-warning {
-            background: linear-gradient(135deg, #f39c12 0%, #f1c40f 100%);
-        }
-        
-        .gradient-danger {
-            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
-        }
-        
-        .gradient-dark {
-            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-        }
-        
-        .gradient-light {
-            background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
-        }
-        
-        .gradient-purple {
-            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
-        }
-        
-        /* ব্যালেন্স কার্ডের জন্য বিশেষ গ্রেডিয়েন্ট */
-        .gradient-balance-1 {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-        }
-        
         .gradient-balance-2 {
             background: linear-gradient(135deg, #4568DC 0%, #B06AB3 100%);
-        }
-        
-        .gradient-balance-3 {
-            background: linear-gradient(135deg, #43C6AC 0%, #F8FFAE 100%);
-        }
-        
-        .gradient-balance-4 {
-            background: linear-gradient(135deg, #FF8008 0%, #FFC837 100%);
-        }
-        
-        .gradient-balance-5 {
-            background: linear-gradient(135deg, #00B4DB 0%, #0083B0 100%);
-        }
-        
-        .gradient-balance-6 {
-            background: linear-gradient(135deg, #FC466B 0%, #3F5EFB 100%);
-        }
-        
-        .gradient-balance-7 {
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-        }
-        
-        .gradient-balance-8 {
-            background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
-        }
-        
-        /* টেলিগ্রাম অফিসিয়াল কালার */
-        .telegram-blue {
-            background: #0088cc;
-        }
-        
-        .telegram-gradient {
-            background: linear-gradient(135deg, #0088cc, #00a0e0);
-        }
-        
-        /* হোয়াটসঅ্যাপ অফিসিয়াল কালার */
-        .whatsapp-green {
-            background: #25d366;
-        }
-        
-        .whatsapp-gradient {
-            background: linear-gradient(135deg, #25d366, #128c7e);
-        }
-        
-        .whatsapp-gradient-2 {
-            background: linear-gradient(135deg, #128c7e, #075e54);
-        }
-        
-        /* টেক্সট গ্রেডিয়েন্ট */
-        .text-gradient-primary {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .text-gradient-success {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        /* প্রিমিয়াম কার্ড */
-        .premium-card {
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .premium-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.25);
-        }
-        
-        .premium-card-dark {
-            background: #2c3e50;
-            border-radius: 24px;
-            box-shadow: 0 10px 40px -15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            color: white;
-        }
-        
-        .premium-card-dark:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.4);
-        }
-        
-        /* প্রিমিয়াম বাটন */
-        .btn-primary {
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(52, 152, 219, 0.5);
-        }
-        
-        .btn-success {
-            background: linear-gradient(135deg, #11998e, #38ef7d);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px -5px rgba(17, 153, 142, 0.5);
-        }
-        
-        .btn-premium {
-            background: linear-gradient(135deg, #1e2a3a, #2c3e50);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-premium::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .btn-premium:hover::after {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .btn-premium:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 30px -10px rgba(30, 42, 58, 0.5);
-        }
-        
-        /* মেনু আইটেম - প্রফেশনাল ডিজাইন */
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 10px 16px;
-            background: white;
-            border-radius: 14px;
-            border: 1px solid #eef2f6;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            margin-bottom: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-        }
-        
-        .menu-item:hover {
-            background: #f8faff;
-            border-color: #3498db;
-            transform: translateX(5px);
-            box-shadow: 0 5px 15px -8px rgba(52, 152, 219, 0.4);
-        }
-        
-        .menu-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #3498db, #2980b9);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 14px;
-            box-shadow: 0 4px 10px -3px rgba(52, 152, 219, 0.4);
-        }
-        
-        .menu-icon i {
-            color: white;
-            font-size: 18px;
-        }
-        
-        .menu-name {
-            flex: 1;
-            font-size: 15px;
-            font-weight: 500;
-            color: #2c3e50;
-        }
-        
-        .menu-price {
-            color: #3498db;
-            font-weight: 700;
-            font-size: 15px;
-            margin-right: 10px;
-            background: #ebf5ff;
-            padding: 4px 8px;
-            border-radius: 20px;
-        }
-        
-        .menu-arrow {
-            color: #bdc3c7;
-            font-size: 12px;
-            transition: transform 0.3s ease;
-        }
-        
-        .menu-item:hover .menu-arrow {
-            transform: translateX(5px);
-            color: #3498db;
-        }
-        
-        /* অর্ডার আইটেম */
-        .order-item {
-            background: white;
-            padding: 16px;
-            border-radius: 16px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-            border-left: 4px solid #3498db;
-            transition: all 0.3s ease;
-        }
-        
-        .order-item:hover {
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-        }
-        
-        /* স্ক্রলবার */
-        ::-webkit-scrollbar {
-            width: 5px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #3498db;
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #2980b9;
-        }
-        
-        /* স্ট্যাটাস ব্যাজ */
-        .status-badge {
-            padding: 4px 10px;
-            border-radius: 30px;
-            font-size: 11px;
-            font-weight: 600;
-            display: inline-block;
-        }
-        
-        .status-pending {
-            background: #fef3c7;
-            color: #d97706;
-        }
-        
-        .status-completed {
-            background: #d1fae5;
-            color: #059669;
-        }
-        
-        /* হোম পেজ হেডার */
-        .home-header {
-            background: linear-gradient(135deg, #1e2a3a, #2c3e50);
-            padding: 16px 20px;
-            border-bottom-left-radius: 30px;
-            border-bottom-right-radius: 30px;
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
         }
         
         /* ব্যালেন্স কার্ড */
@@ -431,6 +82,86 @@
             height: 200px;
             background: rgba(255,255,255,0.1);
             border-radius: 50%;
+        }
+        
+        /* মেনু আইটেম */
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            background: white;
+            border-radius: 14px;
+            border: 1px solid #eef2f6;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+        
+        .menu-item:hover {
+            background: #f8faff;
+            border-color: #3498db;
+            transform: translateX(5px);
+        }
+        
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 14px;
+        }
+        
+        .menu-icon i {
+            color: white;
+            font-size: 18px;
+        }
+        
+        .menu-name {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .menu-price {
+            color: #3498db;
+            font-weight: 700;
+            font-size: 15px;
+            margin-right: 10px;
+            background: #ebf5ff;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        
+        /* অর্ডার আইটেম */
+        .order-item {
+            background: white;
+            padding: 16px;
+            border-radius: 16px;
+            border-left: 4px solid #3498db;
+            transition: all 0.3s ease;
+        }
+        
+        /* স্ট্যাটাস ব্যাজ */
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        
+        .status-completed {
+            background: #d1fae5;
+            color: #059669;
+        }
+        
+        /* হোম হেডার */
+        .home-header {
+            background: linear-gradient(135deg, #1e2a3a, #2c3e50);
+            padding: 16px 20px;
+            border-bottom-left-radius: 30px;
+            border-bottom-right-radius: 30px;
         }
     </style>
 </head>
@@ -512,7 +243,61 @@
         }
     }
 
-    // ---------- লগইন পেজ - প্রফেশনাল ডিজাইন ----------
+    // ---------- ফায়ারবেস থেকে সার্ভিস লোড ----------
+    async function loadServicesFromFirebase() {
+        try {
+            const snapshot = await db.collection('services').orderBy('id', 'asc').get();
+            
+            if (snapshot.empty) {
+                console.log('সার্ভিস তৈরি করা হচ্ছে...');
+                
+                const defaultServices = [
+                    { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card', price: 100, description: 'NID নাম্বার দিয়ে PDF কপি সংগ্রহ করুন' },
+                    { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy', price: 100, description: 'সার্ভার থেকে সরাসরি কপি' },
+                    { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby', price: 100, description: 'নতুন জন্মনিবন্ধন করুন' },
+                    { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit', price: 100, description: 'মোবাইল নাম্বার আপডেট করুন' },
+                    { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen', price: 100, description: 'ভুল তথ্য সংশোধন করুন' },
+                    { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit', price: 100, description: 'এনআইডি তথ্য সংশোধন' },
+                    { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice', price: 100, description: 'টিন সার্টিফিকেট সংগ্রহ' },
+                    { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line', price: 100, description: 'কর রিটার্ন দাখিল' },
+                    { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt', price: 100, description: 'মোবাইল নাম্বার দিয়ে এনআইডি তথ্য' },
+                    { id: 10, name: 'জন্মনিবন্ধন মেক', icon: 'fa-file-signature', price: 150, description: 'নতুন জন্মনিবন্ধন তৈরি' },
+                    { id: 11, name: 'সাইন কপি', icon: 'fa-signature', price: 120, description: 'সহি সম্বলিত কপি' },
+                    { id: 12, name: 'বায়োমেট্রিক রবি', icon: 'fa-sim-card', price: 200, description: 'রবি সিম বায়োমেট্রিক আপডেট' },
+                    { id: 13, name: 'বায়োমেট্রিক এয়ারটেল', icon: 'fa-sim-card', price: 200, description: 'এয়ারটেল সিম বায়োমেট্রিক আপডেট' },
+                    { id: 14, name: 'বায়োমেট্রিক বাংলালিংক', icon: 'fa-sim-card', price: 200, description: 'বাংলালিংক সিম বায়োমেট্রিক আপডেট' },
+                    { id: 15, name: 'বায়োমেট্রিক গ্রামীণ', icon: 'fa-sim-card', price: 200, description: 'গ্রামীণ সিম বায়োমেট্রিক আপডেট' },
+                    { id: 16, name: 'IMEI টু লোকেশন', icon: 'fa-map-marker-alt', price: 150, description: 'IMEI নাম্বার দিয়ে লোকেশন ট্র্যাক' },
+                    { id: 17, name: 'নাম্বার টু লোকেশন', icon: 'fa-map-pin', price: 150, description: 'মোবাইল নাম্বার দিয়ে লোকেশন' }
+                ];
+                
+                for (const service of defaultServices) {
+                    await db.collection('services').doc(service.id.toString()).set(service);
+                }
+                
+                const newSnapshot = await db.collection('services').orderBy('id', 'asc').get();
+                services = [];
+                newSnapshot.forEach(doc => {
+                    services.push({ id: parseInt(doc.id), ...doc.data() });
+                });
+            } else {
+                services = [];
+                snapshot.forEach(doc => {
+                    services.push({ id: parseInt(doc.id), ...doc.data() });
+                });
+            }
+            
+            // হোম পেজ আপডেট করা
+            if (currentUser && !window.location.hash.includes('admin')) {
+                loadMenuServices();
+            }
+            
+        } catch (error) {
+            console.error('সার্ভিস লোড ত্রুটি:', error);
+        }
+    }
+
+    // ---------- লগইন পেজ ----------
     function renderLoginPage() {
         app.innerHTML = `
             <div class="min-h-screen bg-gradient-to-br from-[#1e2a3a] to-[#2c3e50] flex items-center justify-center p-4">
@@ -570,7 +355,7 @@
         `;
     }
 
-    // ---------- রেজিস্টার পেজ - প্রফেশনাল ডিজাইন ----------
+    // ---------- রেজিস্টার পেজ ----------
     function showRegisterPage() {
         app.innerHTML = `
             <div class="min-h-screen bg-gradient-to-br from-[#1e2a3a] to-[#2c3e50] flex items-center justify-center p-4">
@@ -627,13 +412,13 @@
         `;
     }
 
-    // ---------- হোমপেজ - প্রফেশনাল ডিজাইন ----------
+    // ---------- হোমপেজ ----------
     async function renderHomePage() {
         await loadUserBalance();
         
         app.innerHTML = `
             <div class="bg-gray-50 min-h-screen pb-10">
-                <!-- হেডার - প্রফেশনাল ডিজাইন -->
+                <!-- হেডার -->
                 <div class="home-header text-white">
                     <div class="flex justify-between items-center">
                         <button onclick="toggleMenu()" class="w-10 h-10 rounded-xl bg-white/10 hover:bg-white/20 flex items-center justify-center transition-all backdrop-blur-sm">
@@ -657,7 +442,7 @@
                     </div>
                 </div>
                 
-                <!-- সাইড মেনু - প্রফেশনাল ডিজাইন -->
+                <!-- সাইড মেনু -->
                 <div id="sideMenu" class="fixed left-0 top-0 h-full w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out overflow-y-auto">
                     <div class="bg-gradient-to-r from-[#1e2a3a] to-[#2c3e50] text-white p-5 sticky top-0 flex justify-between items-center">
                         <h2 class="font-bold text-xl">আমাদের সার্ভিস</h2>
@@ -677,7 +462,7 @@
                 
                 <div id="menuOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="toggleMenu()"></div>
                 
-                <!-- ব্যালেন্স কার্ড - প্রফেশনাল ডিজাইন (টেক্সট সাদা) -->
+                <!-- ব্যালেন্স কার্ড -->
                 <div class="px-5 pt-6">
                     <div class="balance-card gradient-balance-2 text-white">
                         <div class="flex items-center justify-between mb-4 relative z-10">
@@ -697,7 +482,7 @@
                     </div>
                 </div>
                 
-                <!-- অর্ডার লিস্ট - প্রফেশনাল ডিজাইন -->
+                <!-- অর্ডার লিস্ট -->
                 <div class="px-5 mt-6">
                     <div class="flex items-center justify-between mb-4">
                         <h2 class="font-bold text-gray-800 text-lg flex items-center">
@@ -709,10 +494,10 @@
                     <div id="ordersList" class="space-y-3"></div>
                 </div>
                 
-                <!-- কন্টাক্ট কার্ড - প্রফেশনাল ডিজাইন -->
+                <!-- কন্টাক্ট কার্ড -->
                 <div class="px-5 mt-6 space-y-3">
                     <!-- WhatsApp Group -->
-                    <div class="premium-card overflow-hidden">
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                         <a href="https://chat.whatsapp.com/CBiZLw71oKBJNdJxoaqX2G" target="_blank" class="flex items-center justify-between p-4">
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-[#25d366] rounded-xl flex items-center justify-center mr-3 shadow-md">
@@ -728,7 +513,7 @@
                     </div>
                     
                     <!-- WhatsApp Personal -->
-                    <div class="premium-card overflow-hidden">
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                         <a href="https://wa.me/8801753119223" target="_blank" class="flex items-center justify-between p-4">
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-[#25d366] rounded-xl flex items-center justify-center mr-3 shadow-md">
@@ -743,8 +528,8 @@
                         </a>
                     </div>
                     
-                    <!-- টেলিগ্রাম - অফিসিয়াল কালার -->
-                    <div class="premium-card overflow-hidden">
+                    <!-- টেলিগ্রাম -->
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden">
                         <a href="https://t.me/amarshebabd" target="_blank" class="flex items-center justify-between p-4">
                             <div class="flex items-center">
                                 <div class="w-12 h-12 bg-[#0088cc] rounded-xl flex items-center justify-center mr-3 shadow-md">
@@ -773,13 +558,7 @@
         }, 500);
     }
 
-    // ---------- ইউজার মেনু টগল ----------
-    window.toggleUserMenu = function() {
-        const menu = document.getElementById('userMenu');
-        if (menu) menu.classList.toggle('hidden');
-    };
-
-    // ---------- মেনুতে সার্ভিস লোড - প্রফেশনাল ডিজাইন ----------
+    // ---------- মেনুতে সার্ভিস লোড ----------
     function loadMenuServices() {
         const menuEl = document.getElementById('menuServicesList');
         if (!menuEl) return;
@@ -790,7 +569,7 @@
         }
         
         let html = '';
-        services.forEach(service => {
+        services.sort((a, b) => a.id - b.id).forEach(service => {
             html += `
                 <div onclick="showServiceDetails('${service.id}', '${service.name}')" class="menu-item">
                     <div class="menu-icon">
@@ -836,12 +615,19 @@
                         </div>
         `;
         
-        if (serviceId == 1) {
+        // নতুন বায়োমেট্রিক সার্ভিসের জন্য ফর্ম
+        if (serviceId >= 12 && serviceId <= 15) {
             html += `
                 <div class="space-y-4">
                     <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">🔢 NID নাম্বার</label>
-                        <input type="text" id="nidNumber" placeholder="এনআইডি নাম্বার লিখুন" 
+                        <label class="block text-gray-700 text-sm font-medium mb-2">📱 মোবাইল নাম্বার</label>
+                        <input type="text" id="phoneNumber" placeholder="০১৭xxxxxxxx" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">🆔 জাতীয় পরিচয়পত্র নাম্বার</label>
+                        <input type="text" id="nidNumber" placeholder="এনআইডি নাম্বার" 
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
                     </div>
                     
@@ -851,7 +637,7 @@
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
                     </div>
                     
-                    <button onclick="placeOrder(1, 'NID নাম্বার টু PDF', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
                         অর্ডার করুন
                         <i class="fas fa-shopping-cart ml-2"></i>
@@ -859,7 +645,44 @@
                 </div>
             `;
         }
-        else if (serviceId == 2) {
+        // IMEI টু লোকেশন
+        else if (serviceId == 16) {
+            html += `
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">📱 IMEI নাম্বার</label>
+                        <input type="text" id="imeiNumber" placeholder="IMEI নাম্বার দিন" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
+                    </div>
+                    
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
+                        class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
+                        অর্ডার করুন
+                        <i class="fas fa-shopping-cart ml-2"></i>
+                    </button>
+                </div>
+            `;
+        }
+        // নাম্বার টু লোকেশন
+        else if (serviceId == 17) {
+            html += `
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 text-sm font-medium mb-2">📱 মোবাইল নাম্বার</label>
+                        <input type="text" id="phoneNumber" placeholder="০১৭xxxxxxxx" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
+                    </div>
+                    
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
+                        class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
+                        অর্ডার করুন
+                        <i class="fas fa-shopping-cart ml-2"></i>
+                    </button>
+                </div>
+            `;
+        }
+        // অন্যান্য সার্ভিসের জন্য ফর্ম
+        else if (serviceId == 1 || serviceId == 2) {
             html += `
                 <div class="space-y-4">
                     <div>
@@ -874,7 +697,7 @@
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
                     </div>
                     
-                    <button onclick="placeOrder(2, 'সার্ভার কপি', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
                         অর্ডার করুন
                         <i class="fas fa-shopping-cart ml-2"></i>
@@ -884,13 +707,6 @@
         }
         else if (serviceId == 3) {
             html += `
-                <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg mb-6">
-                    <div class="flex">
-                        <i class="fas fa-exclamation-triangle text-yellow-600 mt-1 mr-3"></i>
-                        <p class="text-sm text-yellow-700">নতুন জন্মনিবন্ধন করতে নিচের তথ্য দিন। রেজিষ্ট্রেশন আপনার নির্বাচিত জেলার সিটি করপোরেশন থেকে হবে।</p>
-                    </div>
-                </div>
-                
                 <div class="space-y-4">
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2">🗺️ জেলা</label>
@@ -931,97 +747,11 @@
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
                     </div>
                     
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">🏠 জন্মস্থান</label>
-                        <input type="text" id="birthPlace" placeholder="জন্মস্থান" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📫 ঠিকানা</label>
-                        <textarea id="address" rows="3" placeholder="বর্তমান ঠিকানা" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]"></textarea>
-                    </div>
-                    
-                    <button onclick="placeOrder(3, 'নতুন জন্মনিবন্ধন', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
                         অর্ডার করুন
                         <i class="fas fa-shopping-cart ml-2"></i>
                     </button>
-                </div>
-            `;
-        }
-        else if (serviceId == 4) {
-            html += `
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">🔢 বর্তমান জন্মনিবন্ধন নাম্বার</label>
-                        <input type="text" id="currentBn" placeholder="বর্তমান নাম্বার" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📅 জন্ম তারিখ</label>
-                        <input type="date" id="dob" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📱 নতুন ফোন নাম্বার</label>
-                        <input type="text" id="newPhone" placeholder="০১৭xxxxxxxx" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <button onclick="placeOrder(4, 'জন্মনিবন্ধন নাম্বার পরিবর্তন', ${price})" 
-                        class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
-                        অর্ডার করুন
-                        <i class="fas fa-shopping-cart ml-2"></i>
-                    </button>
-                </div>
-            `;
-        }
-        else if (serviceId == 5) {
-            html += `
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">🔢 জন্মনিবন্ধন নাম্বার</label>
-                        <input type="text" id="bnNumber" placeholder="জন্মনিবন্ধন নাম্বার" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📅 জন্ম তারিখ</label>
-                        <input type="date" id="dob" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📝 কি সংশোধন করতে চান?</label>
-                        <textarea id="note" rows="4" placeholder="বিস্তারিত লিখুন" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]"></textarea>
-                    </div>
-                    
-                    <button onclick="placeOrder(5, 'জন্মনিবন্ধন সংশোধন', ${price})" 
-                        class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
-                        অর্ডার করুন
-                        <i class="fas fa-shopping-cart ml-2"></i>
-                    </button>
-                </div>
-            `;
-        }
-        else if (serviceId == 6) {
-            html += `
-                <div class="text-center py-8">
-                    <div class="inline-block p-4 bg-blue-100 rounded-2xl mb-4">
-                        <i class="fas fa-user-edit text-[#3498db] text-4xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">NID সংশোধন</h3>
-                    <p class="text-gray-600 mb-6">NID সংশোধন করতে WhatsApp এ যোগাযোগ করুন</p>
-                    <a href="https://wa.me/8801753119223" target="_blank" 
-                       class="inline-flex items-center justify-center bg-gradient-to-r from-[#25d366] to-[#128c7e] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
-                        <i class="fab fa-whatsapp mr-2 text-2xl"></i>
-                        01753119223
-                    </a>
                 </div>
             `;
         }
@@ -1046,45 +776,11 @@
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
                     </div>
                     
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📫 ঠিকানা</label>
-                        <input type="text" id="address" placeholder="ঠিকানা" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">💼 পেশা</label>
-                        <input type="text" id="profession" placeholder="পেশা" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📱 ফোন নাম্বার</label>
-                        <input type="text" id="phone" placeholder="০১৭xxxxxxxx" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
-                    </div>
-                    
-                    <button onclick="placeOrder(7, 'নতুন টিন সার্টিফিকেট', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
                         অর্ডার করুন
                         <i class="fas fa-shopping-cart ml-2"></i>
                     </button>
-                </div>
-            `;
-        }
-        else if (serviceId == 8) {
-            html += `
-                <div class="text-center py-8">
-                    <div class="inline-block p-4 bg-blue-100 rounded-2xl mb-4">
-                        <i class="fas fa-chart-line text-[#3498db] text-4xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-gray-800 mb-2">ই-রিটার্ন</h3>
-                    <p class="text-gray-600 mb-6">ই-রিটার্ন দাখিল করতে WhatsApp এ যোগাযোগ করুন</p>
-                    <a href="https://wa.me/8801753119223" target="_blank" 
-                       class="inline-flex items-center justify-center bg-gradient-to-r from-[#25d366] to-[#128c7e] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
-                        <i class="fab fa-whatsapp mr-2 text-2xl"></i>
-                        01753119223
-                    </a>
                 </div>
             `;
         }
@@ -1097,7 +793,7 @@
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-[#3498db]">
                     </div>
                     
-                    <button onclick="placeOrder(9, 'ফোন নাম্বার টু এনআইডি', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
                         অর্ডার করুন
                         <i class="fas fa-shopping-cart ml-2"></i>
@@ -1111,25 +807,25 @@
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2">👤 আবেদনকারীর নাম</label>
                         <input type="text" id="applicantName" placeholder="আবেদনকারীর নাম লিখুন" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all">
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400">
                     </div>
                     
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2">🔢 জন্মনিবন্ধন নাম্বার</label>
                         <input type="text" id="birthRegNumber" placeholder="জন্মনিবন্ধন নাম্বার দিন" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all">
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400">
                     </div>
                     
                     <div>
                         <label class="block text-gray-700 text-sm font-medium mb-2">📅 জন্ম তারিখ</label>
                         <input type="date" id="dob" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400 focus:ring-2 focus:ring-purple-100 transition-all">
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-purple-400">
                     </div>
                     
-                    <button onclick="placeOrder(10, 'জম্মনিবন্ধন মেক', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-purple-600 to-purple-500 text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
-                        অর্ডার কনফার্ম করুন
-                        <i class="fas fa-check-circle ml-2"></i>
+                        অর্ডার করুন
+                        <i class="fas fa-shopping-cart ml-2"></i>
                     </button>
                 </div>
             `;
@@ -1155,23 +851,23 @@
                             class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400">
                     </div>
                     
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📄 যে ডকুমেন্টের সাইন কপি প্রয়োজন</label>
-                        <textarea id="documentDetails" rows="4" placeholder="ডকুমেন্টের বিবরণ" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400"></textarea>
-                    </div>
-                    
-                    <div>
-                        <label class="block text-gray-700 text-sm font-medium mb-2">📱 মোবাইল নাম্বার</label>
-                        <input type="text" id="phone" placeholder="০১৭xxxxxxxx" 
-                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-orange-400">
-                    </div>
-                    
-                    <button onclick="placeOrder(11, 'সাইন কপি', ${price})" 
+                    <button onclick="placeOrder(${serviceId}, '${serviceName}', ${price})" 
                         class="w-full bg-gradient-to-r from-orange-600 to-orange-500 text-white py-3 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
                         অর্ডার করুন
                         <i class="fas fa-shopping-cart ml-2"></i>
                     </button>
+                </div>
+            `;
+        }
+        else {
+            html += `
+                <div class="text-center py-8">
+                    <p class="text-gray-500 mb-4">এই সার্ভিসের জন্য বিস্তারিত তথ্য প্রয়োজন</p>
+                    <a href="https://wa.me/8801753119223" target="_blank" 
+                       class="inline-flex items-center justify-center bg-gradient-to-r from-[#25d366] to-[#128c7e] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
+                        <i class="fab fa-whatsapp mr-2 text-2xl"></i>
+                        WhatsApp এ যোগাযোগ
+                    </a>
                 </div>
             `;
         }
@@ -1215,7 +911,7 @@
             };
             
             // ডিটেইলস সংগ্রহ
-            if (serviceId == 1 || serviceId == 2) {
+            if (serviceId == 1 || serviceId == 2 || serviceId == 7) {
                 orderData.details = {
                     nidNumber: document.getElementById('nidNumber')?.value || '',
                     dob: document.getElementById('dob')?.value || ''
@@ -1227,33 +923,7 @@
                     name: document.getElementById('name')?.value || '',
                     fatherName: document.getElementById('fatherName')?.value || '',
                     motherName: document.getElementById('motherName')?.value || '',
-                    dob: document.getElementById('dob')?.value || '',
-                    birthPlace: document.getElementById('birthPlace')?.value || '',
-                    address: document.getElementById('address')?.value || ''
-                };
-            }
-            else if (serviceId == 4) {
-                orderData.details = {
-                    currentBn: document.getElementById('currentBn')?.value || '',
-                    dob: document.getElementById('dob')?.value || '',
-                    newPhone: document.getElementById('newPhone')?.value || ''
-                };
-            }
-            else if (serviceId == 5) {
-                orderData.details = {
-                    bnNumber: document.getElementById('bnNumber')?.value || '',
-                    dob: document.getElementById('dob')?.value || '',
-                    note: document.getElementById('note')?.value || ''
-                };
-            }
-            else if (serviceId == 7) {
-                orderData.details = {
-                    name: document.getElementById('name')?.value || '',
-                    nidNumber: document.getElementById('nidNumber')?.value || '',
-                    dob: document.getElementById('dob')?.value || '',
-                    address: document.getElementById('address')?.value || '',
-                    profession: document.getElementById('profession')?.value || '',
-                    phone: document.getElementById('phone')?.value || ''
+                    dob: document.getElementById('dob')?.value || ''
                 };
             }
             else if (serviceId == 9) {
@@ -1272,9 +942,24 @@
                 orderData.details = {
                     name: document.getElementById('name')?.value || '',
                     nidNumber: document.getElementById('nidNumber')?.value || '',
-                    dob: document.getElementById('dob')?.value || '',
-                    documentDetails: document.getElementById('documentDetails')?.value || '',
-                    phone: document.getElementById('phone')?.value || ''
+                    dob: document.getElementById('dob')?.value || ''
+                };
+            }
+            else if (serviceId >= 12 && serviceId <= 15) {
+                orderData.details = {
+                    phoneNumber: document.getElementById('phoneNumber')?.value || '',
+                    nidNumber: document.getElementById('nidNumber')?.value || '',
+                    dob: document.getElementById('dob')?.value || ''
+                };
+            }
+            else if (serviceId == 16) {
+                orderData.details = {
+                    imeiNumber: document.getElementById('imeiNumber')?.value || ''
+                };
+            }
+            else if (serviceId == 17) {
+                orderData.details = {
+                    phoneNumber: document.getElementById('phoneNumber')?.value || ''
                 };
             }
             
@@ -1349,20 +1034,15 @@
             
         } catch (error) {
             console.error('অর্ডার লোড ত্রুটি:', error);
-            const ordersList = document.getElementById('ordersList');
-            if (ordersList) {
-                ordersList.innerHTML = '<div class="bg-white rounded-xl p-8 text-center shadow-sm"><p class="text-red-500"></p></div>';
-            }
-       }
+        }
     }
 
-    // ---------- ইউজার মেনু ----------
+    // ---------- ইউটিলিটি ফাংশন ----------
     window.toggleUserMenu = function() {
         const menu = document.getElementById('userMenu');
         if (menu) menu.classList.toggle('hidden');
     };
 
-    // ---------- মেনু টগল ----------
     window.toggleMenu = function() {
         const menu = document.getElementById('sideMenu');
         const overlay = document.getElementById('menuOverlay');
@@ -1377,12 +1057,10 @@
         }
     };
 
-    // ---------- গো ব্যাক ----------
     window.goBack = function() {
         renderHomePage();
     };
 
-    // ---------- সার্ভিস ডিটেইলস ----------
     window.showServiceDetails = function(serviceId, serviceName) {
         toggleMenu();
         showServiceDetailsPage(parseInt(serviceId), serviceName);
@@ -1541,7 +1219,6 @@
         
         app.insertAdjacentHTML('beforeend', modalHtml);
         
-        // পদ্ধতি নির্বাচন ফাংশন
         window.selectPaymentMethod = function(method) {
             const bkashTab = document.getElementById('bkash-tab');
             const nagadTab = document.getElementById('nagad-tab');
@@ -1620,60 +1297,7 @@
         }
     }
 
-    // ---------- ফায়ারবেস থেকে সার্ভিস লোড ----------
-    async function loadServicesFromFirebase() {
-        try {
-            const snapshot = await db.collection('services').get();
-            
-            if (snapshot.empty) {
-                console.log('সার্ভিস তৈরি করা হচ্ছে...');
-                
-                const defaultServices = [
-                    { id: 1, name: 'NID নাম্বার টু PDF', icon: 'fa-id-card', price: 100 },
-                    { id: 2, name: 'সার্ভার কপি', icon: 'fa-copy', price: 100 },
-                    { id: 3, name: 'নতুন জন্মনিবন্ধন', icon: 'fa-baby', price: 100 },
-                    { id: 4, name: 'জন্মনিবন্ধন নাম্বার পরিবর্তন', icon: 'fa-edit', price: 100 },
-                    { id: 5, name: 'জন্মনিবন্ধন সংশোধন', icon: 'fa-pen', price: 100 },
-                    { id: 6, name: 'NID সংশোধন', icon: 'fa-user-edit', price: 100 },
-                    { id: 7, name: 'নতুন টিন সার্টিফিকেট', icon: 'fa-file-invoice', price: 100 },
-                    { id: 8, name: 'ই-রিটার্ন', icon: 'fa-chart-line', price: 100 },
-                    { id: 9, name: 'ফোন নাম্বার টু এনআইডি', icon: 'fa-mobile-alt', price: 100 },
-                    { id: 10, name: 'জম্মনিবন্ধন মেক', icon: 'fa-file-signature', price: 150 },
-                    { id: 11, name: 'সাইন কপি', icon: 'fa-signature', price: 120 }
-                ];
-                
-                for (const service of defaultServices) {
-                    await db.collection('services').doc(service.id.toString()).set({
-                        name: service.name,
-                        icon: service.icon,
-                        price: service.price
-                    });
-                }
-                
-                const newSnapshot = await db.collection('services').get();
-                services = [];
-                newSnapshot.forEach(doc => {
-                    services.push({ id: parseInt(doc.id), ...doc.data() });
-                });
-            } else {
-                services = [];
-                snapshot.forEach(doc => {
-                    services.push({ id: parseInt(doc.id), ...doc.data() });
-                });
-                services.sort((a, b) => a.id - b.id);
-            }
-            
-            // হোম পেজ আপডেট করা
-            if (currentUser && !window.location.hash.includes('admin')) {
-                loadMenuServices();
-            }
-            
-        } catch (error) {
-            console.error('সার্ভিস লোড ত্রুটি:', error);
-        }
-    }
-
-    // ---------- এডমিন প্যানেল ----------
+    // ---------- এডমিন প্যানেল (আপডেটেড) ----------
     async function renderAdminPanel() {
         app.innerHTML = `
             <div class="min-h-screen bg-gray-100">
@@ -1734,6 +1358,7 @@
                         <button onclick="showAdminTab('requests')" class="flex-1 py-3 text-center rounded-lg text-sm font-medium transition-all" id="tabRequests">রিকোয়েস্ট</button>
                         <button onclick="showAdminTab('services')" class="flex-1 py-3 text-center rounded-lg text-sm font-medium transition-all" id="tabServices">সার্ভিস</button>
                         <button onclick="showAdminTab('orders')" class="flex-1 py-3 text-center rounded-lg text-sm font-medium transition-all" id="tabOrders">অর্ডার</button>
+                        <button onclick="showAdminTab('addService')" class="flex-1 py-3 text-center rounded-lg text-sm font-medium transition-all" id="tabAddService">+ নিউ</button>
                     </div>
 
                     <div id="adminContent" class="bg-white rounded-xl shadow-lg p-5"></div>
@@ -1744,12 +1369,12 @@
         showAdminTab('users');
     }
 
-    // ---------- এডমিন ট্যাব ফাংশন ----------
+    // ---------- এডমিন ট্যাব ফাংশন (আপডেটেড) ----------
     window.showAdminTab = async function(tab) {
-        ['Users', 'Requests', 'Services', 'Orders'].forEach(t => {
+        ['Users', 'Requests', 'Services', 'Orders', 'AddService'].forEach(t => {
             const el = document.getElementById(`tab${t}`);
             if (el) {
-                if (t.toLowerCase() === tab) {
+                if (t.toLowerCase() === tab || (t === 'AddService' && tab === 'addService')) {
                     el.classList.add('bg-gradient-to-r', 'from-[#3498db]', 'to-[#2980b9]', 'text-white');
                     el.classList.remove('text-gray-600', 'bg-gray-100');
                 } else {
@@ -1774,7 +1399,7 @@
                 if (snapshot.empty) {
                     html += '<p class="text-gray-500 text-center py-4">কোন ইউজার নেই</p>';
                 } else {
-                    html += '<div class="space-y-2">';
+                    html += '<div class="space-y-2 max-h-96 overflow-y-auto">';
                     snapshot.forEach(doc => {
                         const data = doc.data();
                         html += `
@@ -1817,7 +1442,7 @@
                 if (snapshot.empty) {
                     html += '<p class="text-gray-500 text-center py-4">কোন পেন্ডিং রিকোয়েস্ট নেই</p>';
                 } else {
-                    html += '<div class="space-y-2">';
+                    html += '<div class="space-y-2 max-h-96 overflow-y-auto">';
                     snapshot.forEach(doc => {
                         const data = doc.data();
                         html += `
@@ -1855,9 +1480,9 @@
             let html = `
                 <h3 class="font-bold mb-3 text-lg flex items-center">
                     <i class="fas fa-cog text-[#3498db] mr-2"></i>
-                    সার্ভিস প্রাইস ম্যানেজ
+                    সার্ভিস প্রাইস ম্যানেজ (মোট ${services.length} টি)
                 </h3>
-                <div class="space-y-3">
+                <div class="space-y-3 max-h-96 overflow-y-auto">
             `;
             
             services.sort((a, b) => a.id - b.id).forEach(service => {
@@ -1866,9 +1491,9 @@
                         <div class="w-10 h-10 bg-[#3498db] bg-opacity-20 rounded-lg flex items-center justify-center">
                             <i class="fas ${service.icon} text-[#3498db]"></i>
                         </div>
-                        <span class="flex-1 font-medium">${service.name}</span>
+                        <span class="flex-1 font-medium text-sm">${service.name}</span>
                         <input type="number" id="price${service.id}" value="${service.price}" class="w-20 border p-2 rounded text-center">
-                        <button onclick="updateServicePrice(${service.id})" class="bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white px-4 py-2 rounded">
+                        <button onclick="updateServicePrice(${service.id})" class="bg-gradient-to-r from-[#3498db] to-[#2980b9] text-white px-4 py-2 rounded text-sm whitespace-nowrap">
                             আপডেট
                         </button>
                     </div>
@@ -1896,7 +1521,7 @@
                 if (snapshot.empty) {
                     html += '<p class="text-gray-500 text-center py-4">কোন অর্ডার নেই</p>';
                 } else {
-                    html += '<div class="space-y-2">';
+                    html += '<div class="space-y-2 max-h-96 overflow-y-auto">';
                     snapshot.forEach(doc => {
                         const order = doc.data();
                         const date = order.timestamp ? new Date(order.timestamp.toDate()).toLocaleString('bn-BD') : 'তারিখ নেই';
@@ -1906,7 +1531,7 @@
                                 <div class="flex justify-between items-start">
                                     <div>
                                         <p class="font-medium">📱 ${order.userPhone}</p>
-                                        <p class="font-semibold">${order.serviceName}</p>
+                                        <p class="font-semibold text-sm">${order.serviceName}</p>
                                         <p class="text-[#3498db] font-bold">৳${order.price}</p>
                                         <p class="text-xs text-gray-500">${date}</p>
                                     </div>
@@ -1921,6 +1546,85 @@
             } catch (error) {
                 content.innerHTML = '<p class="text-red-500 text-center py-8">অর্ডার লোড করতে ব্যর্থ</p>';
             }
+        }
+        
+        else if (tab === 'addService') {
+            content.innerHTML = `
+                <h3 class="font-bold mb-4 text-lg flex items-center">
+                    <i class="fas fa-plus-circle text-green-500 mr-2"></i>
+                    নতুন সার্ভিস যোগ করুন
+                </h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">সার্ভিসের নাম</label>
+                        <input type="text" id="newServiceName" placeholder="যেমন: বায়োমেট্রিক রবি" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">আইকন (Font Awesome)</label>
+                        <input type="text" id="newServiceIcon" placeholder="যেমন: fa-sim-card" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500">
+                        <p class="text-xs text-gray-500 mt-1">Font Awesome আইকন ক্লাস (fa-solid ছাড়া)</p>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">মূল্য (টাকা)</label>
+                        <input type="number" id="newServicePrice" placeholder="যেমন: 200" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 font-medium mb-2">বিবরণ</label>
+                        <textarea id="newServiceDescription" rows="3" placeholder="সার্ভিস সম্পর্কে সংক্ষিপ্ত বিবরণ" 
+                            class="w-full p-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:border-green-500"></textarea>
+                    </div>
+                    
+                    <button onclick="addNewService()" 
+                        class="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-[1.02] transition-all">
+                        <i class="fas fa-save mr-2"></i>
+                        সার্ভিস সংরক্ষণ করুন
+                    </button>
+                </div>
+            `;
+        }
+    };
+
+    // ---------- নতুন সার্ভিস এড করার ফাংশন ----------
+    window.addNewService = async function() {
+        const name = document.getElementById('newServiceName')?.value;
+        const icon = document.getElementById('newServiceIcon')?.value;
+        const price = document.getElementById('newServicePrice')?.value;
+        const description = document.getElementById('newServiceDescription')?.value;
+        
+        if (!name || !icon || !price) {
+            alert('সব তথ্য দিন');
+            return;
+        }
+        
+        // সর্বোচ্চ আইডি বের করা
+        const maxId = services.length > 0 ? Math.max(...services.map(s => s.id)) : 0;
+        const newId = maxId + 1;
+        
+        try {
+            await db.collection('services').doc(newId.toString()).set({
+                id: newId,
+                name: name,
+                icon: icon,
+                price: parseInt(price),
+                description: description || ''
+            });
+            
+            alert('✅ নতুন সার্ভিস যোগ করা হয়েছে!');
+            
+            // সার্ভিস রিলোড
+            await loadServicesFromFirebase();
+            showAdminTab('services');
+            
+        } catch (error) {
+            console.error('সার্ভিস যোগ ত্রুটি:', error);
+            alert('সার্ভিস যোগ করতে ব্যর্থ হয়েছে');
         }
     };
 
@@ -1959,9 +1663,7 @@
         if (!service) return;
         
         try {
-            await db.collection('services').doc(serviceId.toString()).set({
-                name: service.name,
-                icon: service.icon,
+            await db.collection('services').doc(serviceId.toString()).update({
                 price: parseInt(price)
             });
             
